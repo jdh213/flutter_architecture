@@ -1,6 +1,6 @@
 import 'package:app/src/app.dart';
-import 'package:app/src/screens/splash_screen.dart';
 import 'package:app_core/app_core.dart';
+import 'package:app_design_system/app_design_system.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,6 +23,6 @@ void main() {
     );
     await tester.pump();
 
-    expect(find.byType(SplashScreen), findsOneWidget);
+    expect(find.byType(AppLoadingView), findsOneWidget);
   });
 }

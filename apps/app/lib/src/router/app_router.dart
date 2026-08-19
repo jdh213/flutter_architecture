@@ -1,12 +1,15 @@
-import 'package:app/src/screens/splash_screen.dart';
-import 'package:app/src/widgets/logout_button.dart';
+import 'package:app_design_system/app_design_system.dart';
 import 'package:feature_auth/feature_auth.dart';
 import 'package:feature_example/feature_example.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
+
+/// 세션 복원(AuthUnknown) 동안 머무는 대기 경로.
+/// 화면이라기보다 라우터의 부속품이라 별도 파일 없이 여기서 소유한다.
+const String _splashPath = '/splash';
 
 /// 앱 전역 라우터.
 ///
@@ -32,10 +35,10 @@ GoRouter appRouter(Ref ref) {
       final auth = ref.read(sessionControllerProvider);
       final location = state.matchedLocation;
       final atLogin = location == LoginScreen.routePath;
-      final atSplash = location == SplashScreen.routePath;
+      final atSplash = location == _splashPath;
 
       return switch (auth) {
-        AuthUnknown() => atSplash ? null : SplashScreen.routePath,
+        AuthUnknown() => atSplash ? null : _splashPath,
         Unauthenticated() => atLogin ? null : LoginScreen.routePath,
         Authenticated() =>
           (atLogin || atSplash) ? PostListScreen.routePath : null,
@@ -43,8 +46,8 @@ GoRouter appRouter(Ref ref) {
     },
     routes: [
       GoRoute(
-        path: SplashScreen.routePath,
-        builder: (context, state) => const SplashScreen(),
+        path: _splashPath,
+        builder: (context, state) => const Scaffold(body: AppLoadingView()),
       ),
       GoRoute(
         path: LoginScreen.routePath,
@@ -52,7 +55,8 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: PostListScreen.routePath,
-        // feature 간 연결(로그아웃 버튼)은 composition root가 조립한다.
+        // feature 간 연결(feature_auth의 로그아웃 버튼을 feature_example
+        // 화면에 주입)은 composition root가 조립한다.
         builder: (context, state) =>
             const PostListScreen(appBarActions: [LogoutButton()]),
       ),

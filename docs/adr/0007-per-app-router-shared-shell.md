@@ -21,8 +21,14 @@ feature와 화면 지도가 다르다. 별도 `app_router` 패키지로 빼면 �
 feature에 의존하는 패키지가 하나 더 생길 뿐이며(제2의 composition root),
 그 패키지를 공유하는 순간 모든 앱이 모든 feature를 끌고 가게 된다.
 
-같은 이유로 bootstrap의 overrides(앱별 DI 배선), feature 간 접착 위젯
-(LogoutButton), 라우터 전용 화면(Splash)도 각 앱이 소유한다.
+같은 이유로 bootstrap의 overrides(앱별 DI 배선)와 라우터 전용 대기
+경로(스플래시 — 라우터 파일 안에 인라인)도 각 앱이 소유한다.
+
+한편 위젯의 소속은 의존성으로 판정한다: LogoutButton은 feature_auth에만
+의존하므로 **feature_auth가 소유·export** 하고, 그것을 다른 feature의
+화면(appBarActions)에 **주입하는 행위**만 앱(라우터)이 담당한다.
+앱에는 자체 UI 파일이 남지 않는다 — 최종 구성:
+`main_*.dart + src/{app,bootstrap,router/app_router}.dart`.
 
 ## 결정 2: 앱과 무관한 골격은 app_shell로 공유한다
 

@@ -15,3 +15,4 @@ export 'src/domain/auth_status.dart';
 export 'src/domain/auth_user.dart';
 export 'src/presentation/login/login_screen.dart';
 export 'src/presentation/session/session_controller.dart';
+export 'src/presentation/widgets/logout_button.dart';
