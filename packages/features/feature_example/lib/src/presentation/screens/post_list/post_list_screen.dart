@@ -74,6 +74,9 @@ class _Body extends StatelessWidget {
 
     return Column(
       children: [
+        // RefreshIndicator의 onRefresh는 fire-and-forget intent라 스피너가
+        // 즉시 사라진다 — 실제 진행 상태는 isRefreshing으로 표시한다.
+        if (state.isRefreshing) const LinearProgressIndicator(minHeight: 2),
         if (state.isFromCache) const _OfflineBanner(),
         Expanded(
           child: RefreshIndicator(

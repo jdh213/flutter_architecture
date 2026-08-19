@@ -53,7 +53,10 @@ class _MviEffectListenerState<E extends MviEffect>
   @override
   void didUpdateWidget(MviEffectListener<E> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.effects, widget.effects)) {
+    // ==를 사용한다 — 같은 StreamController에서 나온 스트림은 래퍼 인스턴스가
+    // 달라도 동등하므로, rebuild마다 불필요하게 재구독하지 않는다
+    // (재구독 사이에 전달 대기 중이던 effect가 유실될 수 있다).
+    if (oldWidget.effects != widget.effects) {
       unawaited(_subscription?.cancel());
       _subscribe();
     }

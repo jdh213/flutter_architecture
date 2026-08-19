@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,15 +21,31 @@ class FlutterSecureStore implements SecureStore {
 
   final FlutterSecureStorage _storage;
 
+  // 플랫폼 예외(PlatformException 등)를 앱 예외 체계로 변환한다 —
+  // "저장소 오류 → CacheException" 계약 (app_exception.dart 참고).
+  Future<T> _guard<T>(Future<T> Function() body, String operation) async {
+    try {
+      return await body();
+    } on Exception catch (e, st) {
+      throw CacheException(
+        message: 'SecureStore $operation failed',
+        cause: e,
+        stackTrace: st,
+      );
+    }
+  }
+
   @override
-  Future<String?> read(String key) => _storage.read(key: key);
+  Future<String?> read(String key) =>
+      _guard(() => _storage.read(key: key), 'read');
 
   @override
   Future<void> write(String key, String value) =>
-      _storage.write(key: key, value: value);
+      _guard(() => _storage.write(key: key, value: value), 'write');
 
   @override
-  Future<void> delete(String key) => _storage.delete(key: key);
+  Future<void> delete(String key) =>
+      _guard(() => _storage.delete(key: key), 'delete');
 }
 
 /// 테스트용 인메모리 구현.

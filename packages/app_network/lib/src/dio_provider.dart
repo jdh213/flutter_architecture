@@ -30,9 +30,19 @@ Dio dio(Ref ref) {
     ),
   );
 
-  if (env.enableNetworkLog) {
+  // 로그 정책 (보안):
+  // - 헤더는 어떤 flavor에서도 로그하지 않는다 (Authorization Bearer 토큰 유출 방지).
+  // - 바디는 dev flavor에서만 로그한다 (stg는 실서버 자격증명이 오갈 수 있다).
+  // - prod에서 enableNetworkLog=true는 EnvConfig의 assert가 컴파일 시점에 차단한다.
+  if (env.enableNetworkLog && !env.isProd) {
+    final verbose = env.flavor == AppFlavor.dev;
     dio.interceptors.add(
-      LogInterceptor(requestBody: true, responseBody: true),
+      LogInterceptor(
+        requestHeader: false,
+        responseHeader: false,
+        requestBody: verbose,
+        responseBody: verbose,
+      ),
     );
   }
 

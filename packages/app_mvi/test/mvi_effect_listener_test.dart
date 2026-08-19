@@ -58,6 +58,14 @@ void main() {
     emitter.disposeEffects();
   });
 
+  test('effects는 항상 동일한 스트림을 반환한다 (rebuild 재구독 churn 방지)', () {
+    final emitter = _TestEmitter();
+
+    expect(identical(emitter.effects, emitter.effects), isTrue);
+
+    emitter.disposeEffects();
+  });
+
   testWidgets('위젯이 dispose 되면 더 이상 Effect를 받지 않는다', (tester) async {
     final emitter = _TestEmitter();
     final received = <_TestEffect>[];

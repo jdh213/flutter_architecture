@@ -27,6 +27,8 @@ class PostDetailViewModel extends _$PostDetailViewModel {
   }
 
   Future<void> _load() async {
+    // microtask로 지연 실행되므로 dispose 이후일 수 있다.
+    if (!ref.mounted) return;
     state = const PostDetailState();
 
     // 조합/도메인 규칙이 필요한 조회라 Repository 직행 대신 UseCase를 쓴다

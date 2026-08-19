@@ -1,5 +1,6 @@
 import 'package:app/main_dev.dart' as app;
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -14,6 +15,11 @@ import 'package:integration_test/integration_test.dart';
 /// 등으로 에뮬레이터를 띄운 뒤 실행한다.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  // 이전 실행이 남긴 토큰/프로필을 정리한다 — 잔존 세션이 있으면 restore()가
+  // 자동 로그인해 로그인 화면 단언이 결정적으로 실패한다 (iOS Keychain은
+  // 앱 삭제 후에도 남으므로 특히 중요).
+  setUp(() => const FlutterSecureStorage().deleteAll());
 
   testWidgets('로그인하면 게시글 목록이 표시된다', (tester) async {
     app.main();

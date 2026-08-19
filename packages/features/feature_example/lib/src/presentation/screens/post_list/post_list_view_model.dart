@@ -32,10 +32,20 @@ class PostListViewModel extends _$PostListViewModel
     }
   }
 
+  /// 재진입 가드 — 재시도 연타 등으로 fetch가 병렬 실행되어
+  /// 늦게 온 stale 응답이 최신 상태를 덮어쓰는 것을 막는다.
+  bool _loadInFlight = false;
+
   Future<void> _loadInitial() async {
+    // microtask로 지연 실행되므로 dispose 이후일 수 있다.
+    if (!ref.mounted) return;
+    if (_loadInFlight || state.isRefreshing) return;
+    _loadInFlight = true;
+
     state = state.copyWith(isLoading: true, error: null);
 
     final result = await ref.read(postsRepositoryProvider).fetchPosts();
+    _loadInFlight = false;
     if (!ref.mounted) return;
 
     state = result.fold(
@@ -52,7 +62,7 @@ class PostListViewModel extends _$PostListViewModel
   }
 
   Future<void> _refresh() async {
-    if (state.isRefreshing) return;
+    if (state.isRefreshing || _loadInFlight) return;
     state = state.copyWith(isRefreshing: true);
 
     final result = await ref.read(postsRepositoryProvider).fetchPosts();

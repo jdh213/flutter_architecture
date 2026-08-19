@@ -35,10 +35,16 @@ mixin MviEffectEmitter<E extends MviEffect> {
   late final StreamController<E> _effectController =
       StreamController<E>.broadcast(onListen: _flushPending);
 
+  // StreamController.stream getter는 접근마다 새 래퍼를 만들므로 캐싱한다 —
+  // View(MviEffectListener)가 rebuild마다 다른 스트림으로 오인해
+  // 구독을 재생성하는 것을 막는다.
+  late final Stream<E> _effects = _effectController.stream;
+
   final List<E> _pendingEffects = [];
 
   /// View가 구독하는 Effect 스트림. `MviEffectListener` 위젯과 함께 사용한다.
-  Stream<E> get effects => _effectController.stream;
+  /// 항상 동일한 인스턴스를 반환한다.
+  Stream<E> get effects => _effects;
 
   /// Effect를 방출한다. 구독자가 없으면 버퍼링 후 첫 구독자에게 전달한다.
   void emitEffect(E effect) {

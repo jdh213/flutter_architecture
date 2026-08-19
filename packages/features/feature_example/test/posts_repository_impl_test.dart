@@ -48,6 +48,18 @@ void main() {
     expect(fallback.valueOrNull!.posts.single.title, '제목');
   });
 
+  test('캐시 쓰기 실패는 성공 응답을 망치지 않는다 (Result 계약 유지)', () async {
+    final throwingRepository = PostsRepositoryImpl(
+      api: api,
+      cache: _ThrowingCache(),
+    );
+    when(api.fetchPosts).thenAnswer((_) async => [dto]);
+
+    final result = await throwingRepository.fetchPosts();
+
+    expect(result.valueOrNull?.posts.single.title, '제목');
+  });
+
   test('네트워크 실패 + 캐시 없음이면 NetworkException Failure를 반환한다', () async {
     when(api.fetchPosts).thenThrow(networkError());
 
@@ -63,4 +75,21 @@ void main() {
 
     expect(result.valueOrNull!.id, 1);
   });
+}
+
+/// 캐시 쓰기 실패(디스크 풀 등)를 흉내내는 스텁.
+class _ThrowingCache implements JsonCacheStore {
+  @override
+  Future<void> put(String key, Object? json) async =>
+      throw Exception('disk full');
+
+  @override
+  Future<T?> get<T>(
+    String key, {
+    required T Function(Object? json) decode,
+    Duration? maxAge,
+  }) async => null;
+
+  @override
+  Future<void> evict(String key) async {}
 }

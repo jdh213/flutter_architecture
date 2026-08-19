@@ -39,5 +39,14 @@ jobs:
       - name: 정적 분석
         run: flutter analyze
 
+      - name: custom_lint (riverpod_lint)
+        run: |
+          for p in packages/app_core packages/app_mvi packages/app_network \
+                   packages/app_shell packages/app_storage packages/app_design_system \
+                   packages/features/feature_auth packages/features/feature_example apps/app; do
+            echo "custom_lint: $p"
+            (cd "$p" && dart run custom_lint)
+          done
+
       - name: 테스트
         run: ./scripts/test.sh

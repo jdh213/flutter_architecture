@@ -12,6 +12,22 @@ find apps packages -name '*.dart' \
 echo "▶ analyze"
 flutter analyze
 
+echo "▶ custom_lint (riverpod_lint)"
+LINT_PACKAGES=(
+  packages/app_core
+  packages/app_mvi
+  packages/app_network
+  packages/app_shell
+  packages/app_storage
+  packages/app_design_system
+  packages/features/feature_auth
+  packages/features/feature_example
+  apps/app
+)
+for p in "${LINT_PACKAGES[@]}"; do
+  (cd "$p" && dart run custom_lint)
+done
+
 echo "▶ test"
 ./scripts/test.sh
 

@@ -17,7 +17,10 @@ class EnvConfig {
     required this.flavor,
     required this.apiBaseUrl,
     this.enableNetworkLog = false,
-  });
+  }) : assert(
+         !(flavor == AppFlavor.prod && enableNetworkLog),
+         'prod에서는 enableNetworkLog를 켤 수 없다 (토큰/자격증명 로그 유출 방지)',
+       );
 
   final AppFlavor flavor;
   final String apiBaseUrl;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:feature_example/src/di.dart';
 import 'package:feature_example/src/domain/entities/post.dart';
@@ -77,6 +79,25 @@ void main() {
     expect(state.posts, [post], reason: '실패해도 기존 데이터를 유지한다');
     expect(state.isRefreshing, isFalse);
     expect(effects.single, isA<PostListShowError>());
+  });
+
+  test('재시도 연타 시 요청이 병렬 실행되지 않는다 (재진입 가드)', () async {
+    final completer = Completer<Result<PostsSnapshot>>();
+    when(repository.fetchPosts).thenAnswer((_) => completer.future);
+
+    container.listen(postListViewModelProvider, (_, _) {});
+    await pumpEventQueue(); // 초기 로드 시작 (in-flight)
+
+    container.read(postListViewModelProvider.notifier)
+      ..onIntent(const PostListRetryPressed())
+      ..onIntent(const PostListRetryPressed());
+    await pumpEventQueue();
+
+    completer.complete(const Result.success(snapshot));
+    await pumpEventQueue();
+
+    verify(repository.fetchPosts).called(1);
+    expect(container.read(postListViewModelProvider).posts, [post]);
   });
 
   test('항목 탭 intent는 상세 이동 Effect를 방출한다', () async {

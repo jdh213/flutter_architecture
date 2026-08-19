@@ -41,7 +41,7 @@ final class PostListViewModelProvider
   }
 }
 
-String _$postListViewModelHash() => r'd5243f28d2c15a19dca5c9ede78e40d322d5027a';
+String _$postListViewModelHash() => r'3ceab56bd6c15d37c58921d0cc70986fb1a75b28';
 
 abstract class _$PostListViewModel extends $Notifier<PostListState> {
   PostListState build();

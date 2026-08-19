@@ -28,7 +28,7 @@ class PostsRepositoryImpl implements PostsRepository {
 
     switch (result) {
       case Success(:final value):
-        await _cache.put(_cacheKey, value.map((e) => e.toJson()).toList());
+        await _updateCacheOrIgnore(value);
         return Result.success(
           PostsSnapshot(
             posts: value.map((e) => e.toDomain()).toList(),
@@ -52,6 +52,17 @@ class PostsRepositoryImpl implements PostsRepository {
     () async => (await _api.fetchPost(id)).toDomain(),
   );
 
+  /// 캐시는 부가 기능이다 — 쓰기 실패(디스크 풀, DB 잠김 등)가
+  /// 성공한 네트워크 응답을 망치거나 Repository의 'throw 금지' 계약을
+  /// 뚫으면 안 되므로 여기서 삼킨다.
+  Future<void> _updateCacheOrIgnore(List<PostDto> dtos) async {
+    try {
+      await _cache.put(_cacheKey, dtos.map((e) => e.toJson()).toList());
+    } on Exception {
+      // 무시 — 다음 성공 응답에서 다시 시도된다.
+    }
+  }
+
   Future<List<Post>?> _readCacheOrNull() async {
     try {
       final dtos = await _cache.get(
@@ -62,8 +73,8 @@ class PostsRepositoryImpl implements PostsRepository {
             .toList(),
       );
       return dtos?.map((e) => e.toDomain()).toList();
-    } on CacheException {
-      // 캐시 손상은 폴백 실패로만 취급한다.
+    } on Exception {
+      // 캐시 손상/저장소 장애는 폴백 실패(캐시 없음)로만 취급한다.
       return null;
     }
   }

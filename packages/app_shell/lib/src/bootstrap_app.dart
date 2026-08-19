@@ -43,6 +43,13 @@ Future<void> bootstrapApp({
     );
   };
   binding.platformDispatcher.onError = (error, stackTrace) {
+    // true를 반환해 에러를 소비하므로, release 빌드에서도 최소한의 흔적이
+    // 남도록 콘솔 덤프를 강제한다 (기본 reporter의 developer.log는
+    // release/AOT에서 no-op이다). 크래시 리포터 도입 후에도 무해하다.
+    FlutterError.dumpErrorToConsole(
+      FlutterErrorDetails(exception: error, stack: stackTrace),
+      forceReport: true,
+    );
     unawaited(reporter.report(error, stackTrace, fatal: true));
     return true;
   };
