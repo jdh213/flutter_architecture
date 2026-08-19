@@ -26,21 +26,40 @@ import 'package:app_mvi/src/mvi_contracts.dart';
 ///   }
 /// }
 /// ```
+///
+/// 전달 보장: 구독자가 없는 순간에 방출된 Effect는 버퍼에 쌓였다가
+/// 다음 구독자가 붙는 즉시 순서대로 전달된다. 따라서 화면 빌드보다
+/// 먼저 방출된 Effect도 유실되지 않는다. (구독자가 끝내 나타나지 않으면
+/// disposeEffects 시점에 버퍼는 폐기된다)
 mixin MviEffectEmitter<E extends MviEffect> {
-  final StreamController<E> _effectController = StreamController<E>.broadcast();
+  late final StreamController<E> _effectController =
+      StreamController<E>.broadcast(onListen: _flushPending);
+
+  final List<E> _pendingEffects = [];
 
   /// View가 구독하는 Effect 스트림. `MviEffectListener` 위젯과 함께 사용한다.
   Stream<E> get effects => _effectController.stream;
 
-  /// Effect를 방출한다. 구독자가 없으면 조용히 버려진다 (broadcast).
+  /// Effect를 방출한다. 구독자가 없으면 버퍼링 후 첫 구독자에게 전달한다.
   void emitEffect(E effect) {
-    if (!_effectController.isClosed) {
+    if (_effectController.isClosed) return;
+    if (_effectController.hasListener) {
       _effectController.add(effect);
+    } else {
+      _pendingEffects.add(effect);
     }
+  }
+
+  void _flushPending() {
+    if (_pendingEffects.isEmpty) return;
+    final pending = List.of(_pendingEffects);
+    _pendingEffects.clear();
+    pending.forEach(_effectController.add);
   }
 
   /// Notifier의 build()에서 `ref.onDispose(disposeEffects)`로 등록한다.
   void disposeEffects() {
+    _pendingEffects.clear();
     unawaited(_effectController.close());
   }
 }

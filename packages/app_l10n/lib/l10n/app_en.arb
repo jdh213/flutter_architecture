@@ -1,0 +1,26 @@
+{
+  "@@locale": "en",
+
+  "retry": "Retry",
+  "errorTimeout": "The request timed out. Please try again shortly.",
+  "errorNoConnection": "Please check your network connection.",
+  "errorUnauthorized": "Your session has expired. Please sign in again.",
+  "errorForbidden": "You don't have permission to access this.",
+  "errorNotFound": "The requested information could not be found.",
+  "errorServer": "A temporary server problem occurred. Please try again shortly.",
+  "errorCancelled": "The request was cancelled.",
+  "errorNetwork": "A network error occurred.",
+  "errorCache": "Failed to read saved data.",
+  "errorUnknown": "An unknown error occurred.",
+
+  "loginTitle": "Sign in",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "loginButton": "Sign in",
+  "logoutTooltip": "Sign out",
+
+  "postsTitle": "Posts",
+  "postDetailTitle": "Post detail",
+  "offlineBanner": "Offline — showing saved data.",
+  "relatedPostsTitle": "More from this author"
+}

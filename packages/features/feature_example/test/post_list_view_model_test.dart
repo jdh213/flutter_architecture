@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:feature_example/src/data/posts_repository_impl.dart';
+import 'package:feature_example/src/di.dart';
 import 'package:feature_example/src/domain/post.dart';
 import 'package:feature_example/src/domain/posts_repository.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_effect.dart';
@@ -42,10 +42,10 @@ void main() {
     final state = container.read(postListViewModelProvider);
     expect(state.isLoading, isFalse);
     expect(state.posts, [post]);
-    expect(state.errorMessage, isNull);
+    expect(state.error, isNull);
   });
 
-  test('초기 로드 실패 시 errorMessage를 세팅한다', () async {
+  test('초기 로드 실패 시 error를 세팅한다', () async {
     when(repository.fetchPosts).thenAnswer((_) async => failure);
 
     container.listen(postListViewModelProvider, (_, _) {});
@@ -53,7 +53,7 @@ void main() {
 
     final state = container.read(postListViewModelProvider);
     expect(state.isLoading, isFalse);
-    expect(state.errorMessage, '네트워크 오류');
+    expect(state.error?.message, '네트워크 오류');
   });
 
   test('새로고침 실패 시 기존 데이터를 유지하고 에러 Effect만 방출한다', () async {

@@ -13,6 +13,9 @@ PACKAGES=(
   apps/app
 )
 
+echo "▶ gen-l10n: packages/app_l10n"
+(cd packages/app_l10n && flutter gen-l10n)
+
 for p in "${PACKAGES[@]}"; do
   echo "▶ codegen: $p"
   (cd "$p" && dart run build_runner build --delete-conflicting-outputs)

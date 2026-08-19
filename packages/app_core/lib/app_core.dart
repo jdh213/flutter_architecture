@@ -9,5 +9,6 @@ library;
 
 export 'src/env/env_config.dart';
 export 'src/error/app_exception.dart';
+export 'src/error/error_reporter.dart';
 export 'src/logger/app_logger.dart';
 export 'src/result/result.dart';

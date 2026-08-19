@@ -5,9 +5,6 @@ import 'package:feature_example/src/data/post_dto.dart';
 import 'package:feature_example/src/data/posts_api.dart';
 import 'package:feature_example/src/domain/post.dart';
 import 'package:feature_example/src/domain/posts_repository.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'posts_repository_impl.g.dart';
 
 /// 네트워크 우선 + 오프라인 캐시 폴백 Repository.
 ///
@@ -71,9 +68,3 @@ class PostsRepositoryImpl implements PostsRepository {
     }
   }
 }
-
-@riverpod
-PostsRepository postsRepository(Ref ref) => PostsRepositoryImpl(
-  api: ref.watch(postsApiProvider),
-  cache: ref.watch(jsonCacheStoreProvider),
-);

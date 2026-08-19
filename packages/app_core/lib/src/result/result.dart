@@ -41,7 +41,7 @@ sealed class Result<T> {
       return Result.failure(
         mapped ??
             UnknownException(
-              message: '알 수 없는 오류가 발생했습니다.',
+              message: 'Unhandled error in Result.guard',
               cause: e,
               stackTrace: st,
             ),

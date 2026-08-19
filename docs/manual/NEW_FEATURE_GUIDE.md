@@ -38,11 +38,13 @@ src/data/
 ```
 
 체크리스트:
-- [ ] API 클래스는 `ref.watch(dioProvider)` 주입 (`@riverpod` 함수 provider)
+- [ ] API 클래스는 `ref.watch(dioProvider)` 주입 (`@riverpod` 함수 provider, 구현 파일 옆)
 - [ ] Repository 구현은 `safeApiCall(...)`로 감싸 Result 반환
 - [ ] 오프라인이 필요하면 `posts_repository_impl.dart`의 캐시 폴백 패턴 복제
-- [ ] `xxxRepositoryProvider`는 `@riverpod` (표준) — 화면과 함께 dispose 되어도
-      무방하면 기본, 앱 전역 공유가 필요하면 `keepAlive: true`
+- [ ] `xxxRepositoryProvider`는 **`src/di.dart`에** 둔다 (ADR-0005) —
+      presentation이 data 파일을 import 하지 않도록. 화면과 함께 dispose 되어도
+      무방하면 기본(autoDispose), 앱 전역 공유가 필요하면 `keepAlive: true`
+- [ ] 에러 message는 개발자용 영문 설명 — 사용자 문구는 arb 키로 (CONVENTIONS의 l10n 절)
 
 ## 4. presentation 작성 — MVI 5파일
 

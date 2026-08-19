@@ -71,7 +71,7 @@ final class PostDetailViewModelProvider
 }
 
 String _$postDetailViewModelHash() =>
-    r'bf913d8c8f5277145ac3b2c5936811cea11b4645';
+    r'535c97f7e75f546f97f9a7a65e32a8e5b251864d';
 
 /// 파라미터(postId)를 받는 ViewModel — riverpod family 예시.
 ///

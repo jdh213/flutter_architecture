@@ -1,4 +1,5 @@
 import 'package:app_design_system/app_design_system.dart';
+import 'package:app_l10n/app_l10n.dart';
 import 'package:feature_example/src/presentation/post_detail/post_detail_intent.dart';
 import 'package:feature_example/src/presentation/post_detail/post_detail_view_model.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,11 @@ class PostDetailScreen extends ConsumerWidget {
     final viewModel = ref.read(postDetailViewModelProvider(postId).notifier);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('게시글 상세')),
+      appBar: AppBar(title: Text(context.l10n.postDetailTitle)),
       body: switch (state) {
         _ when state.isLoading => const AppLoadingView(),
-        _ when state.errorMessage != null => AppErrorView(
-          message: state.errorMessage!,
+        _ when state.error != null => AppErrorView(
+          message: state.error!.localizedMessage(context.l10n),
           onRetry: () => viewModel.onIntent(const PostDetailRetryPressed()),
         ),
         _ => SingleChildScrollView(
@@ -46,7 +47,7 @@ class PostDetailScreen extends ConsumerWidget {
               if (state.relatedPosts.isNotEmpty) ...[
                 const AppGap.xl(),
                 Text(
-                  '같은 작성자의 다른 글',
+                  context.l10n.relatedPostsTitle,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const AppGap.sm(),

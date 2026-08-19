@@ -5,7 +5,8 @@ cd "$(dirname "$0")/.."
 
 echo "▶ format check (생성 파일 제외)"
 find apps packages -name '*.dart' \
-  ! -name '*.g.dart' ! -name '*.freezed.dart' ! -path '*/.dart_tool/*' \
+  ! -name '*.g.dart' ! -name '*.freezed.dart' \
+  ! -name 'app_localizations*.dart' ! -path '*/.dart_tool/*' \
   -print0 | xargs -0 dart format --output=none --set-exit-if-changed
 
 echo "▶ analyze"

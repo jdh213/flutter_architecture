@@ -5,8 +5,10 @@
 
 ## 절대 규칙
 
-1. **의존 방향**: app → feature_* → app_(network|storage|mvi|design_system) → app_core.
+1. **의존 방향**: app → feature_* → app_(network|storage|mvi|design_system|l10n) → app_core.
    역방향/feature 간 직접 import 금지. 연결은 apps/app(bootstrap overrides, 위젯 주입)이 조립.
+   feature 내부에서 presentation은 data를 직접 import 하지 않는다 — 경계
+   provider(Repository/UseCase)는 src/di.dart에 둔다.
 2. **MVI**: 화면 = screen/view_model/state/intent/effect 5파일.
    View는 ViewModel의 `onIntent(...)`만 호출. 1회성 이벤트(스낵바/네비게이션)는 Effect.
 3. **Result**: Repository는 throw 하지 않고 `Result<T>` 반환.
@@ -16,6 +18,9 @@
    토큰은 SecureStore에만 저장.
 6. **다른 패키지는 barrel만 import** (`package:xxx/xxx.dart`). src/ 직접 접근 금지.
 7. ViewModel의 `await` 뒤에는 `if (!ref.mounted) return;`.
+8. **사용자 노출 문자열은 app_l10n의 ARB에만** 둔다 (`context.l10n.키`).
+   State/Effect에는 문구 대신 AppException을 담고 View가 localizedMessage로 변환.
+   AppException.message는 개발자용(영문 로그) 설명.
 
 ## 작업 절차
 

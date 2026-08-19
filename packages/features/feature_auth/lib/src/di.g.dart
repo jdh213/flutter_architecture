@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_repository_impl.dart';
+part of 'di.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -8,13 +8,29 @@ part of 'auth_repository_impl.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// feature 내부 배선(조립) 파일.
+///
+/// provider 위치 규칙 (ADR-0005):
+/// - **경계 provider** (presentation이 참조하는 Repository/UseCase) → 이 파일.
+/// - **data 내부 전용 provider** (AuthApi, AuthTokenStore) → 구현 파일 옆.
 
 @ProviderFor(authRepository)
 final authRepositoryProvider = AuthRepositoryProvider._();
 
+/// feature 내부 배선(조립) 파일.
+///
+/// provider 위치 규칙 (ADR-0005):
+/// - **경계 provider** (presentation이 참조하는 Repository/UseCase) → 이 파일.
+/// - **data 내부 전용 provider** (AuthApi, AuthTokenStore) → 구현 파일 옆.
+
 final class AuthRepositoryProvider
     extends $FunctionalProvider<AuthRepository, AuthRepository, AuthRepository>
     with $Provider<AuthRepository> {
+  /// feature 내부 배선(조립) 파일.
+  ///
+  /// provider 위치 규칙 (ADR-0005):
+  /// - **경계 provider** (presentation이 참조하는 Repository/UseCase) → 이 파일.
+  /// - **data 내부 전용 provider** (AuthApi, AuthTokenStore) → 구현 파일 옆.
   AuthRepositoryProvider._()
     : super(
         from: null,

@@ -1,4 +1,4 @@
-import 'package:feature_auth/src/data/auth_repository_impl.dart';
+import 'package:feature_auth/src/di.dart';
 import 'package:feature_auth/src/domain/auth_status.dart';
 import 'package:feature_auth/src/domain/auth_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

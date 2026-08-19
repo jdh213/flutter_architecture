@@ -20,10 +20,20 @@ jobs:
       - name: 의존성 설치 (workspace 전체)
         run: flutter pub get
 
+      - name: 코드 생성 최신화 검증 (커밋된 생성 파일이 소스와 일치하는지)
+        run: |
+          ./scripts/gen.sh
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            echo "::error::생성 파일이 소스와 어긋났습니다. ./scripts/gen.sh 실행 후 커밋하세요."
+            exit 1
+          fi
+
       - name: 포맷 검사 (생성 파일 제외)
         run: |
           find apps packages -name '*.dart' \
-            ! -name '*.g.dart' ! -name '*.freezed.dart' ! -path '*/.dart_tool/*' \
+            ! -name '*.g.dart' ! -name '*.freezed.dart' \
+            ! -name 'app_localizations*.dart' ! -path '*/.dart_tool/*' \
             -print0 | xargs -0 dart format --output=none --set-exit-if-changed
 
       - name: 정적 분석

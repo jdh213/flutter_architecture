@@ -14,8 +14,12 @@ graph TD
     FE --> STO
     FE --> MVI
     FE --> DS
+    DS --> L10N["app_l10n"]
+    FA --> L10N
+    FE --> L10N
     NET --> CORE["app_core"]
     STO --> CORE
+    L10N --> CORE
     FA --> CORE
     FE --> CORE
 ```
@@ -33,6 +37,7 @@ feature 간 직접 의존(feature_example → feature_auth)은 금지다.
 | `app_network` | Dio 구성, 인터셉터, DioException → NetworkException | 특정 feature 지식 |
 | `app_storage` | KeyValue / Secure / JsonCache 저장소 | 특정 feature 지식 |
 | `app_mvi` | MVI 계약과 유틸 (Intent/State/Effect) | 비즈니스 로직 |
+| `app_l10n` | ARB 리소스, AppLocalizations, 예외→사용자 문구 매핑 | 비즈니스 로직 |
 | `app_design_system` | 토큰, 테마, 공용 위젯 | 상태관리, 네트워크 |
 | `app_core` | Result, 예외 체계, 로거, EnvConfig | **Flutter import 금지** (순수 Dart) |
 
@@ -44,7 +49,7 @@ feature_x/lib/src/
 │   └── usecases/    # (선택) 조합·공유·도메인 규칙이 생길 때만 추가 — ADR-0005
 ├── data/            # DTO + API + Repository 구현. domain 인터페이스를 구현한다.
 ├── presentation/    # 화면별 MVI 5파일. domain 인터페이스에만 의존한다.
-└── di.dart          # (선택) UseCase 등 domain에 둘 수 없는 배선 전용 파일
+└── di.dart          # 경계 provider(Repository/UseCase) 배선. presentation은 이것만 import
 ```
 
 - **presentation → domain ← data** : presentation은 data를 직접 모른다.
@@ -103,6 +108,8 @@ flavor 진입점이 bootstrap에서 반드시 주입한다.
 3. 한 번만 소비되는 것(스낵바, 다이얼로그, 화면 이동)은 State가 아닌 Effect.
 4. ViewModel은 `await` 뒤에 반드시 `if (!ref.mounted) return;` 가드.
 5. ViewModel의 build()에서 `ref.onDispose(disposeEffects)` 등록 (Effect 사용 시).
+6. State/Effect에는 사용자 문구(String) 대신 `AppException`을 담는다 —
+   문구는 View가 `localizedMessage(context.l10n)`로 만든다 (l10n은 표현 관심사).
 
 전역 상태(인증 세션 등)는 화면 MVI가 아니라 `keepAlive` Notifier로 관리한다
 (`SessionController` 참고). 라우터 redirect가 이 상태를 구독하므로
@@ -119,8 +126,12 @@ DioException ──(app_network exception_mapper)──▶ NetworkException ─�
 - Repository의 모든 public 메서드는 **throw 하지 않고 `Result<T>`를 반환**한다.
 - ViewModel은 `switch (result) { case Success: ... case Failure: ... }`로
   처리하며, sealed 타입이라 누락이 컴파일 에러가 된다.
-- `AppException.message`는 사용자에게 그대로 노출 가능한 한국어 문구,
-  원본 예외는 `cause`에 보존해 로깅용으로만 사용한다.
+- `AppException.message`는 **개발자용(로그) 설명**이다. 사용자 노출 문구는
+  View가 app_l10n의 `exception.localizedMessage(context.l10n)`로 만든다 —
+  인프라는 실패의 분류(NetworkErrorType 등)까지만 책임진다.
+- 잡히지 않은 에러는 bootstrap이 배선한 `ErrorReporter`(app_core)로 수렴한다.
+  기본 구현은 로깅뿐이며, Sentry/Crashlytics 도입 시 `errorReporterProvider`만
+  override 한다.
 
 ## 6. 오프라인 캐시 전략
 

@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 
 /// [DioException]을 앱 전역 예외 체계인 [NetworkException]으로 변환한다.
 ///
-/// message는 사용자에게 그대로 노출 가능한 한국어 문구로 통일한다.
+/// 이 계층의 책임은 실패의 **분류**([NetworkErrorType])까지다.
+/// message는 개발자용(로그) 설명이며, 사용자 노출 문구는 presentation에서
+/// app_l10n의 `localizedMessage(l10n)`가 type을 보고 만든다.
 /// 원본 예외는 [AppException.cause]에 보존되어 로깅에 사용된다.
 NetworkException mapDioException(DioException e, [StackTrace? stackTrace]) {
   final statusCode = e.response?.statusCode;
@@ -14,25 +16,28 @@ NetworkException mapDioException(DioException e, [StackTrace? stackTrace]) {
     DioExceptionType.receiveTimeout ||
     DioExceptionType.transformTimeout => (
       NetworkErrorType.timeout,
-      '요청 시간이 초과되었습니다. 잠시 후 다시 시도해주세요.',
+      'Request timed out',
     ),
     DioExceptionType.connectionError => (
       NetworkErrorType.noConnection,
-      '네트워크 연결을 확인해주세요.',
+      'No network connection',
     ),
-    DioExceptionType.cancel => (NetworkErrorType.cancelled, '요청이 취소되었습니다.'),
+    DioExceptionType.cancel => (
+      NetworkErrorType.cancelled,
+      'Request cancelled',
+    ),
     DioExceptionType.badResponse => switch (statusCode) {
-      401 => (NetworkErrorType.unauthorized, '로그인이 만료되었습니다. 다시 로그인해주세요.'),
-      403 => (NetworkErrorType.forbidden, '접근 권한이 없습니다.'),
-      404 => (NetworkErrorType.notFound, '요청한 정보를 찾을 수 없습니다.'),
+      401 => (NetworkErrorType.unauthorized, 'Unauthorized (401)'),
+      403 => (NetworkErrorType.forbidden, 'Forbidden (403)'),
+      404 => (NetworkErrorType.notFound, 'Not found (404)'),
       != null && >= 500 => (
         NetworkErrorType.server,
-        '서버에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+        'Server error ($statusCode)',
       ),
-      _ => (NetworkErrorType.unknown, '요청 처리 중 오류가 발생했습니다.'),
+      _ => (NetworkErrorType.unknown, 'Unexpected response ($statusCode)'),
     },
     DioExceptionType.badCertificate ||
-    DioExceptionType.unknown => (NetworkErrorType.unknown, '네트워크 오류가 발생했습니다.'),
+    DioExceptionType.unknown => (NetworkErrorType.unknown, 'Network error'),
   };
 
   return NetworkException(

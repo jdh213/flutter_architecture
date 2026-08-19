@@ -1,4 +1,5 @@
 import 'package:app_design_system/app_design_system.dart';
+import 'package:app_l10n/app_l10n.dart';
 import 'package:app_mvi/app_mvi.dart';
 import 'package:feature_auth/src/presentation/login/login_effect.dart';
 import 'package:feature_auth/src/presentation/login/login_intent.dart';
@@ -20,19 +21,20 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(loginViewModelProvider);
     final viewModel = ref.read(loginViewModelProvider.notifier);
+    final l10n = context.l10n;
 
     return MviEffectListener<LoginEffect>(
       effects: viewModel.effects,
       onEffect: (context, effect) {
         switch (effect) {
-          case LoginShowError(:final message):
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(message)));
+          case LoginShowError(:final exception):
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(exception.localizedMessage(l10n))),
+            );
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('로그인')),
+        appBar: AppBar(title: Text(l10n.loginTitle)),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.xl),
@@ -41,7 +43,7 @@ class LoginScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 AppTextField(
-                  label: '이메일',
+                  label: l10n.emailLabel,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   onChanged: (value) =>
@@ -49,7 +51,7 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 const AppGap.lg(),
                 AppTextField(
-                  label: '비밀번호',
+                  label: l10n.passwordLabel,
                   obscureText: true,
                   textInputAction: TextInputAction.done,
                   onChanged: (value) =>
@@ -57,7 +59,7 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 const AppGap.xl(),
                 AppButton(
-                  label: '로그인',
+                  label: l10n.loginButton,
                   isLoading: state.isSubmitting,
                   onPressed: state.canSubmit
                       ? () => viewModel.onIntent(const LoginSubmitted())

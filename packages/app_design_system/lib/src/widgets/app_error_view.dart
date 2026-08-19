@@ -1,6 +1,7 @@
 import 'package:app_design_system/src/tokens/app_spacing.dart';
 import 'package:app_design_system/src/widgets/app_button.dart';
 import 'package:app_design_system/src/widgets/app_gap.dart';
+import 'package:app_l10n/app_l10n.dart';
 import 'package:flutter/material.dart';
 
 /// 화면 전체 에러 표시 + 재시도 버튼.
@@ -36,7 +37,7 @@ class AppErrorView extends StatelessWidget {
             if (onRetry != null) ...[
               const AppGap.lg(),
               AppButton(
-                label: '다시 시도',
+                label: context.l10n.retry,
                 variant: AppButtonVariant.secondary,
                 onPressed: onRetry,
               ),

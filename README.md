@@ -35,7 +35,8 @@ flutter_architecture/
 │       ├── lib/main_{dev,stg,prod}.dart   # flavor 진입점
 │       └── lib/src/{bootstrap,app,router/…}
 ├── packages/
-│   ├── app_core/               # 순수 Dart: Result, AppException, Logger, EnvConfig
+│   ├── app_core/               # 순수 Dart: Result, AppException, ErrorReporter, Logger, EnvConfig
+│   ├── app_l10n/               # 국제화: ARB(ko/en), AppLocalizations, 예외→문구 매핑
 │   ├── app_mvi/                # MVI 계약: Intent/State/Effect, EffectEmitter/Listener
 │   ├── app_network/            # dio + 인터셉터 + 예외 매핑 + safeApiCall
 │   ├── app_storage/            # KeyValueStore / SecureStore / JsonCacheStore(drift)
@@ -92,3 +93,4 @@ app  →  feature_*  →  app_network / app_storage / app_mvi / app_design_syste
   - [0003 — MVI 프레젠테이션 패턴](docs/adr/0003-mvi-presentation-pattern.md)
   - [0004 — 저장소 전략](docs/adr/0004-storage-strategy.md)
   - [0005 — UseCase는 선택적 계층](docs/adr/0005-optional-usecase-layer.md)
+  - [0006 — 문자열 경로 라우팅 유지](docs/adr/0006-string-routes-over-typed-routes.md)

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_mvi/app_mvi.dart';
-import 'package:feature_example/src/data/posts_repository_impl.dart';
+import 'package:feature_example/src/di.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_effect.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_intent.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_state.dart';
@@ -33,7 +33,7 @@ class PostListViewModel extends _$PostListViewModel
   }
 
   Future<void> _loadInitial() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
+    state = state.copyWith(isLoading: true, error: null);
 
     final result = await ref.read(postsRepositoryProvider).fetchPosts();
     if (!ref.mounted) return;
@@ -46,7 +46,7 @@ class PostListViewModel extends _$PostListViewModel
       ),
       onFailure: (exception) => state.copyWith(
         isLoading: false,
-        errorMessage: exception.message,
+        error: exception,
       ),
     );
   }
@@ -68,7 +68,7 @@ class PostListViewModel extends _$PostListViewModel
       case Failure(:final exception):
         // 이미 보여주고 있는 데이터는 유지하고 스낵바만 띄운다.
         state = state.copyWith(isRefreshing: false);
-        emitEffect(PostListShowError(exception.message));
+        emitEffect(PostListShowError(exception));
     }
   }
 }

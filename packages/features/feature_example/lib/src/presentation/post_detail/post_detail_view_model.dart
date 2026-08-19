@@ -42,7 +42,7 @@ class PostDetailViewModel extends _$PostDetailViewModel {
       ),
       onFailure: (exception) => PostDetailState(
         isLoading: false,
-        errorMessage: exception.message,
+        error: exception,
       ),
     );
   }

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostDetailState {
 
- bool get isLoading; Post? get post; List<Post> get relatedPosts; String? get errorMessage;
+ bool get isLoading; Post? get post; List<Post> get relatedPosts; AppException? get error;
 /// Create a copy of PostDetailState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostDetailStateCopyWith<PostDetailState> get copyWith => _$PostDetailStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDetailState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.post, post) || other.post == post)&&const DeepCollectionEquality().equals(other.relatedPosts, relatedPosts)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDetailState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.post, post) || other.post == post)&&const DeepCollectionEquality().equals(other.relatedPosts, relatedPosts)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,post,const DeepCollectionEquality().hash(relatedPosts),errorMessage);
+int get hashCode => Object.hash(runtimeType,isLoading,post,const DeepCollectionEquality().hash(relatedPosts),error);
 
 @override
 String toString() {
-  return 'PostDetailState(isLoading: $isLoading, post: $post, relatedPosts: $relatedPosts, errorMessage: $errorMessage)';
+  return 'PostDetailState(isLoading: $isLoading, post: $post, relatedPosts: $relatedPosts, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostDetailStateCopyWith<$Res>  {
   factory $PostDetailStateCopyWith(PostDetailState value, $Res Function(PostDetailState) _then) = _$PostDetailStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, Post? post, List<Post> relatedPosts, String? errorMessage
+ bool isLoading, Post? post, List<Post> relatedPosts, AppException? error
 });
 
 
@@ -62,13 +62,13 @@ class _$PostDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of PostDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? post = freezed,Object? relatedPosts = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? post = freezed,Object? relatedPosts = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
 as Post?,relatedPosts: null == relatedPosts ? _self.relatedPosts : relatedPosts // ignore: cast_nullable_to_non_nullable
-as List<Post>,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as List<Post>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppException?,
   ));
 }
 /// Create a copy of PostDetailState
@@ -165,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  AppException? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostDetailState() when $default != null:
-return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.error);case _:
   return orElse();
 
 }
@@ -186,10 +186,10 @@ return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  AppException? error)  $default,) {final _that = this;
 switch (_that) {
 case _PostDetailState():
-return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -206,10 +206,10 @@ return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  Post? post,  List<Post> relatedPosts,  AppException? error)?  $default,) {final _that = this;
 switch (_that) {
 case _PostDetailState() when $default != null:
-return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.error);case _:
   return null;
 
 }
@@ -221,7 +221,7 @@ return $default(_that.isLoading,_that.post,_that.relatedPosts,_that.errorMessage
 
 
 class _PostDetailState implements PostDetailState {
-  const _PostDetailState({this.isLoading = true, this.post, final  List<Post> relatedPosts = const [], this.errorMessage}): _relatedPosts = relatedPosts;
+  const _PostDetailState({this.isLoading = true, this.post, final  List<Post> relatedPosts = const [], this.error}): _relatedPosts = relatedPosts;
   
 
 @override@JsonKey() final  bool isLoading;
@@ -233,7 +233,7 @@ class _PostDetailState implements PostDetailState {
   return EqualUnmodifiableListView(_relatedPosts);
 }
 
-@override final  String? errorMessage;
+@override final  AppException? error;
 
 /// Create a copy of PostDetailState
 /// with the given fields replaced by the non-null parameter values.
@@ -245,16 +245,16 @@ _$PostDetailStateCopyWith<_PostDetailState> get copyWith => __$PostDetailStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDetailState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.post, post) || other.post == post)&&const DeepCollectionEquality().equals(other._relatedPosts, _relatedPosts)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDetailState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.post, post) || other.post == post)&&const DeepCollectionEquality().equals(other._relatedPosts, _relatedPosts)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,post,const DeepCollectionEquality().hash(_relatedPosts),errorMessage);
+int get hashCode => Object.hash(runtimeType,isLoading,post,const DeepCollectionEquality().hash(_relatedPosts),error);
 
 @override
 String toString() {
-  return 'PostDetailState(isLoading: $isLoading, post: $post, relatedPosts: $relatedPosts, errorMessage: $errorMessage)';
+  return 'PostDetailState(isLoading: $isLoading, post: $post, relatedPosts: $relatedPosts, error: $error)';
 }
 
 
@@ -265,7 +265,7 @@ abstract mixin class _$PostDetailStateCopyWith<$Res> implements $PostDetailState
   factory _$PostDetailStateCopyWith(_PostDetailState value, $Res Function(_PostDetailState) _then) = __$PostDetailStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, Post? post, List<Post> relatedPosts, String? errorMessage
+ bool isLoading, Post? post, List<Post> relatedPosts, AppException? error
 });
 
 
@@ -282,13 +282,13 @@ class __$PostDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of PostDetailState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? post = freezed,Object? relatedPosts = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? post = freezed,Object? relatedPosts = null,Object? error = freezed,}) {
   return _then(_PostDetailState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,post: freezed == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
 as Post?,relatedPosts: null == relatedPosts ? _self._relatedPosts : relatedPosts // ignore: cast_nullable_to_non_nullable
-as List<Post>,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as List<Post>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppException?,
   ));
 }
 

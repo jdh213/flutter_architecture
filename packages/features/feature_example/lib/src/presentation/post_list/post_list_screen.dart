@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_design_system/app_design_system.dart';
+import 'package:app_l10n/app_l10n.dart';
 import 'package:app_mvi/app_mvi.dart';
 import 'package:feature_example/src/presentation/post_detail/post_detail_screen.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_effect.dart';
@@ -31,17 +32,19 @@ class PostListScreen extends ConsumerWidget {
       effects: viewModel.effects,
       onEffect: (context, effect) {
         switch (effect) {
-          case PostListShowError(:final message):
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(message)));
+          case PostListShowError(:final exception):
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(exception.localizedMessage(context.l10n)),
+              ),
+            );
           case PostListNavigateToDetail(:final postId):
             unawaited(context.push(PostDetailScreen.pathFor(postId)));
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('게시글'),
+          title: Text(context.l10n.postsTitle),
           actions: appBarActions,
         ),
         body: _Body(state: state, viewModel: viewModel),
@@ -62,9 +65,9 @@ class _Body extends StatelessWidget {
       return const AppLoadingView();
     }
 
-    if (state.errorMessage != null && !state.hasData) {
+    if (state.error != null && !state.hasData) {
       return AppErrorView(
-        message: state.errorMessage!,
+        message: state.error!.localizedMessage(context.l10n),
         onRetry: () => viewModel.onIntent(const PostListRetryPressed()),
       );
     }
@@ -109,18 +112,19 @@ class _OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    // 시맨틱 컬러 토큰(ThemeExtension) 사용 예 — 라이트/다크 자동 전환.
+    final semanticColors = context.semanticColors;
     return Container(
       width: double.infinity,
-      color: colorScheme.tertiaryContainer,
+      color: semanticColors.warning,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.sm,
       ),
       child: Text(
-        '오프라인 — 저장된 데이터를 표시하고 있습니다.',
+        context.l10n.offlineBanner,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: colorScheme.onTertiaryContainer,
+          color: semanticColors.onWarning,
         ),
       ),
     );

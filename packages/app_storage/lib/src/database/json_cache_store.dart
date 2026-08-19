@@ -59,7 +59,7 @@ class JsonCacheStore {
       return decode(jsonDecode(row.payload));
     } catch (e, st) {
       throw CacheException(
-        message: '캐시 데이터를 읽는 중 오류가 발생했습니다.',
+        message: 'Failed to decode cached payload for key "$key"',
         cause: e,
         stackTrace: st,
       );

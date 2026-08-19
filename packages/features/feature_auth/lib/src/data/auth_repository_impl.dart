@@ -4,9 +4,6 @@ import 'package:feature_auth/src/data/auth_api.dart';
 import 'package:feature_auth/src/data/auth_token_store.dart';
 import 'package:feature_auth/src/domain/auth_repository.dart';
 import 'package:feature_auth/src/domain/auth_user.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'auth_repository_impl.g.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl({
@@ -43,9 +40,3 @@ class AuthRepositoryImpl implements AuthRepository {
   // - 소셜 로그인: AuthApi에 loginWithKakao() 등을 추가하고
   //   구현체만 교체한다. 이 파일과 presentation은 변경되지 않는다.
 }
-
-@Riverpod(keepAlive: true)
-AuthRepository authRepository(Ref ref) => AuthRepositoryImpl(
-  api: ref.watch(authApiProvider),
-  tokenStore: ref.watch(authTokenStoreProvider),
-);

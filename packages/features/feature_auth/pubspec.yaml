@@ -10,6 +10,7 @@ environment:
 dependencies:
   app_core:
   app_design_system:
+  app_l10n:
   app_mvi:
   app_network:
   app_storage:

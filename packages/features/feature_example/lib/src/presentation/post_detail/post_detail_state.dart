@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_mvi/app_mvi.dart';
 import 'package:feature_example/src/domain/post.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -10,6 +11,6 @@ abstract class PostDetailState with _$PostDetailState implements MviState {
     @Default(true) bool isLoading,
     Post? post,
     @Default([]) List<Post> relatedPosts,
-    String? errorMessage,
+    AppException? error,
   }) = _PostDetailState;
 }

@@ -31,6 +31,9 @@
 ## 상태관리 / DI
 
 - provider는 전부 `@riverpod` codegen. 수동 `Provider(...)` 생성 금지.
+- provider 위치 (ADR-0005): 경계 provider(Repository/UseCase)는 feature의
+  `src/di.dart`, data 내부 전용(API 클라이언트 등)은 구현 파일 옆.
+  presentation은 data 파일을 직접 import 하지 않는다.
 - 인프라성 provider(네트워크, 저장소, Repository)는 `@Riverpod(keepAlive: true)`,
   화면 ViewModel은 기본(autoDispose).
 - ViewModel 밖에서 `ref.read`로 다른 Notifier의 메서드 호출은
@@ -55,6 +58,16 @@
 - 패키지에 개별 analysis_options.yaml을 만들지 않는다 (루트 설정이 무시됨).
 - `// ignore:`는 반드시 바로 위에 이유 주석과 함께.
 
+## 문자열 / 국제화 (l10n)
+
+- 사용자 노출 문자열은 위젯/상태/예외에 하드코딩하지 않는다.
+  `packages/app_l10n/lib/l10n/*.arb`(ko 템플릿 + en)에 키를 추가하고
+  위젯에서 `context.l10n.키`로 읽는다. 재생성은 `./scripts/gen.sh`.
+- State/Effect에는 문구가 아니라 `AppException`을 담고, View가
+  `exception.localizedMessage(context.l10n)`로 변환한다.
+- `AppException.message`는 개발자용(로그) — 영문 기술 설명으로 쓴다.
+- 로그·주석·문서는 자유 (l10n 대상 아님).
+
 ## 비밀값 (API 키 등)
 
 - 코드/JSON에 하드코딩 금지. `env/*.local.json`(gitignore 대상)에 넣고
@@ -69,3 +82,7 @@
 - Repository: API만 mock, 캐시는 in-memory drift(`NativeDatabase.memory()`) 실물 사용.
 - 위젯: 공용 위젯(design system) 단위로 작성.
 - 각 패키지 `test/`에 위치. 전체 실행은 `./scripts/test.sh`.
+- E2E: `apps/app/integration_test/` — 실기기/에뮬레이터에서
+  `flutter test integration_test --flavor dev`로 실행 (CI 미포함, 파일 주석 참고).
+- golden 테스트는 기본 포함하지 않는다 — 플랫폼별 폰트 렌더링 차이로 CI가
+  불안정해지기 때문. 도입하려면 alchemist 등 CI-safe 도구와 함께 추가한다.

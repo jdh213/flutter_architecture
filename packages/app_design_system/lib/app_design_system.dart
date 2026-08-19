@@ -10,6 +10,7 @@ library;
 
 export 'src/theme/app_theme.dart';
 export 'src/tokens/app_radius.dart';
+export 'src/tokens/app_semantic_colors.dart';
 export 'src/tokens/app_spacing.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/app_error_view.dart';

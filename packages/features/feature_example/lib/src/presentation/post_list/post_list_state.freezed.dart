@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostListState {
 
- bool get isLoading; bool get isRefreshing; List<Post> get posts; bool get isFromCache; String? get errorMessage;
+ bool get isLoading; bool get isRefreshing; List<Post> get posts; bool get isFromCache; AppException? get error;
 /// Create a copy of PostListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostListStateCopyWith<PostListState> get copyWith => _$PostListStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostListState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&const DeepCollectionEquality().equals(other.posts, posts)&&(identical(other.isFromCache, isFromCache) || other.isFromCache == isFromCache)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostListState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&const DeepCollectionEquality().equals(other.posts, posts)&&(identical(other.isFromCache, isFromCache) || other.isFromCache == isFromCache)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isRefreshing,const DeepCollectionEquality().hash(posts),isFromCache,errorMessage);
+int get hashCode => Object.hash(runtimeType,isLoading,isRefreshing,const DeepCollectionEquality().hash(posts),isFromCache,error);
 
 @override
 String toString() {
-  return 'PostListState(isLoading: $isLoading, isRefreshing: $isRefreshing, posts: $posts, isFromCache: $isFromCache, errorMessage: $errorMessage)';
+  return 'PostListState(isLoading: $isLoading, isRefreshing: $isRefreshing, posts: $posts, isFromCache: $isFromCache, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostListStateCopyWith<$Res>  {
   factory $PostListStateCopyWith(PostListState value, $Res Function(PostListState) _then) = _$PostListStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isRefreshing, List<Post> posts, bool isFromCache, String? errorMessage
+ bool isLoading, bool isRefreshing, List<Post> posts, bool isFromCache, AppException? error
 });
 
 
@@ -62,14 +62,14 @@ class _$PostListStateCopyWithImpl<$Res>
 
 /// Create a copy of PostListState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isRefreshing = null,Object? posts = null,Object? isFromCache = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isRefreshing = null,Object? posts = null,Object? isFromCache = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isRefreshing: null == isRefreshing ? _self.isRefreshing : isRefreshing // ignore: cast_nullable_to_non_nullable
 as bool,posts: null == posts ? _self.posts : posts // ignore: cast_nullable_to_non_nullable
 as List<Post>,isFromCache: null == isFromCache ? _self.isFromCache : isFromCache // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppException?,
   ));
 }
 
@@ -154,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  AppException? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostListState() when $default != null:
-return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.error);case _:
   return orElse();
 
 }
@@ -175,10 +175,10 @@ return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  AppException? error)  $default,) {final _that = this;
 switch (_that) {
 case _PostListState():
-return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +195,10 @@ return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isRefreshing,  List<Post> posts,  bool isFromCache,  AppException? error)?  $default,) {final _that = this;
 switch (_that) {
 case _PostListState() when $default != null:
-return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.errorMessage);case _:
+return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache,_that.error);case _:
   return null;
 
 }
@@ -210,7 +210,7 @@ return $default(_that.isLoading,_that.isRefreshing,_that.posts,_that.isFromCache
 
 
 class _PostListState extends PostListState {
-  const _PostListState({this.isLoading = true, this.isRefreshing = false, final  List<Post> posts = const [], this.isFromCache = false, this.errorMessage}): _posts = posts,super._();
+  const _PostListState({this.isLoading = true, this.isRefreshing = false, final  List<Post> posts = const [], this.isFromCache = false, this.error}): _posts = posts,super._();
   
 
 @override@JsonKey() final  bool isLoading;
@@ -223,7 +223,7 @@ class _PostListState extends PostListState {
 }
 
 @override@JsonKey() final  bool isFromCache;
-@override final  String? errorMessage;
+@override final  AppException? error;
 
 /// Create a copy of PostListState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +235,16 @@ _$PostListStateCopyWith<_PostListState> get copyWith => __$PostListStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostListState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&const DeepCollectionEquality().equals(other._posts, _posts)&&(identical(other.isFromCache, isFromCache) || other.isFromCache == isFromCache)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostListState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&const DeepCollectionEquality().equals(other._posts, _posts)&&(identical(other.isFromCache, isFromCache) || other.isFromCache == isFromCache)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isRefreshing,const DeepCollectionEquality().hash(_posts),isFromCache,errorMessage);
+int get hashCode => Object.hash(runtimeType,isLoading,isRefreshing,const DeepCollectionEquality().hash(_posts),isFromCache,error);
 
 @override
 String toString() {
-  return 'PostListState(isLoading: $isLoading, isRefreshing: $isRefreshing, posts: $posts, isFromCache: $isFromCache, errorMessage: $errorMessage)';
+  return 'PostListState(isLoading: $isLoading, isRefreshing: $isRefreshing, posts: $posts, isFromCache: $isFromCache, error: $error)';
 }
 
 
@@ -255,7 +255,7 @@ abstract mixin class _$PostListStateCopyWith<$Res> implements $PostListStateCopy
   factory _$PostListStateCopyWith(_PostListState value, $Res Function(_PostListState) _then) = __$PostListStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isRefreshing, List<Post> posts, bool isFromCache, String? errorMessage
+ bool isLoading, bool isRefreshing, List<Post> posts, bool isFromCache, AppException? error
 });
 
 
@@ -272,14 +272,14 @@ class __$PostListStateCopyWithImpl<$Res>
 
 /// Create a copy of PostListState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isRefreshing = null,Object? posts = null,Object? isFromCache = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isRefreshing = null,Object? posts = null,Object? isFromCache = null,Object? error = freezed,}) {
   return _then(_PostListState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isRefreshing: null == isRefreshing ? _self.isRefreshing : isRefreshing // ignore: cast_nullable_to_non_nullable
 as bool,posts: null == posts ? _self._posts : posts // ignore: cast_nullable_to_non_nullable
 as List<Post>,isFromCache: null == isFromCache ? _self.isFromCache : isFromCache // ignore: cast_nullable_to_non_nullable
-as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppException?,
   ));
 }
 

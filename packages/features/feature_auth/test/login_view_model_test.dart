@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:feature_auth/src/data/auth_repository_impl.dart';
+import 'package:feature_auth/src/di.dart';
 import 'package:feature_auth/src/domain/auth_repository.dart';
 import 'package:feature_auth/src/domain/auth_status.dart';
 import 'package:feature_auth/src/domain/auth_user.dart';
@@ -87,7 +87,11 @@ void main() {
     await pumpEventQueue();
 
     expect(effects, [
-      isA<LoginShowError>().having((e) => e.message, 'message', '로그인 실패'),
+      isA<LoginShowError>().having(
+        (e) => e.exception.message,
+        'exception.message',
+        '로그인 실패',
+      ),
     ]);
     expect(container.read(loginViewModelProvider).isSubmitting, isFalse);
     expect(

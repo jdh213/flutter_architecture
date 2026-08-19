@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_mvi/app_mvi.dart';
-import 'package:feature_auth/src/data/auth_repository_impl.dart';
+import 'package:feature_auth/src/di.dart';
 import 'package:feature_auth/src/presentation/login/login_effect.dart';
 import 'package:feature_auth/src/presentation/login/login_intent.dart';
 import 'package:feature_auth/src/presentation/login/login_state.dart';
@@ -52,7 +52,7 @@ class LoginViewModel extends _$LoginViewModel
         ref.read(sessionControllerProvider.notifier).onLoggedIn(value);
       case Failure(:final exception):
         state = state.copyWith(isSubmitting: false);
-        emitEffect(LoginShowError(exception.message));
+        emitEffect(LoginShowError(exception));
     }
   }
 }

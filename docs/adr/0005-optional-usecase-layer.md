@@ -30,11 +30,12 @@ DTO/엔티티 분리)을 따르지만, 교과서식 구성 요소인 UseCase(Int
 - **위치**: `feature_x/lib/src/domain/usecases/` — 순수 Dart,
   Repository 인터페이스에만 의존한다.
 - **형태**: `call()` 메서드를 가진 클래스. `Future<Result<T>>`를 반환한다.
-- **배선**: UseCase provider는 `feature_x/lib/src/di.dart`에 둔다.
-  provider 위치의 일반 규칙은 "그 타입을 만들 줄 아는 가장 안쪽 파일"이다 —
-  Repository provider는 구현 옆(data)이 그 위치지만, UseCase의 배선에는
-  data의 provider가 필요하므로 domain에 둘 수 없다(의존성 규칙 위반).
-  그래서 조립 전용 파일(di.dart)이 담당한다.
+- **배선**: provider 위치 규칙은 두 가지다.
+  - **경계 provider** (presentation이 참조하는 Repository/UseCase) →
+    `feature_x/lib/src/di.dart`. presentation이 data 구현 파일을 import
+    하지 않게 되어 계층 규칙이 import 방향에서도 지켜진다.
+  - **data 내부 전용 provider** (API 클라이언트, 저장소 래퍼 등) →
+    구현 파일 옆.
 
 ## 예제
 

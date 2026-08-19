@@ -1,3 +1,4 @@
+import 'package:app_l10n/app_l10n.dart';
 import 'package:feature_auth/feature_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +14,7 @@ class LogoutButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       icon: const Icon(Icons.logout),
-      tooltip: '로그아웃',
+      tooltip: context.l10n.logoutTooltip,
       onPressed: () => ref.read(sessionControllerProvider.notifier).logout(),
     );
   }

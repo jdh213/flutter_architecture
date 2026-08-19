@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// 여기가 이 템플릿의 **DI 배선 지점**이다. 하위 패키지가 열어둔
 /// 의존성 역전 provider들을 실제 구현으로 연결한다.
 Future<void> bootstrap(EnvConfig env) async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final binding = WidgetsFlutterBinding.ensureInitialized();
 
   final container = ProviderContainer(
     overrides: [
@@ -33,6 +33,24 @@ Future<void> bootstrap(EnvConfig env) async {
       ),
     ],
   );
+
+  // 잡히지 않은 에러의 최종 수신처를 배선한다.
+  // 크래시 리포팅 도구(Sentry/Crashlytics 등)를 붙일 때는 errorReporterProvider를
+  // override 하면 된다 — 아래 훅 코드는 그대로 유지된다.
+  final reporter = container.read(errorReporterProvider);
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    unawaited(
+      reporter.report(
+        details.exception,
+        details.stack ?? StackTrace.current,
+      ),
+    );
+  };
+  binding.platformDispatcher.onError = (error, stackTrace) {
+    unawaited(reporter.report(error, stackTrace, fatal: true));
+    return true;
+  };
 
   // 저장된 토큰으로 세션 복원 시도. 완료되면 AuthUnknown → 결과 상태로
   // 전이되고 라우터가 자동으로 로그인/홈을 분기한다.

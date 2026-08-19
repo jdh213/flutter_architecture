@@ -1,0 +1,19 @@
+name: app_l10n
+description: 공용 국제화(l10n) 계층 — ARB 리소스, AppLocalizations, 예외→사용자 문구 매핑.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  app_core:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.0
+
+flutter:
+  generate: true

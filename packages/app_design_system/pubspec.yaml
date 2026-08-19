@@ -8,6 +8,7 @@ environment:
   sdk: ^3.12.0
 
 dependencies:
+  app_l10n:
   flutter:
     sdk: flutter
 dev_dependencies:

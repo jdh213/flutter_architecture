@@ -14,7 +14,10 @@ sealed class AppException implements Exception {
     this.stackTrace,
   });
 
-  /// 사용자에게 그대로 노출해도 되는 수준의 메시지.
+  /// 개발자용 설명 (로그/디버깅). **UI에 그대로 노출하지 않는다.**
+  /// 사용자 노출 문구는 presentation에서
+  /// app_l10n의 `localizedMessage(l10n)`로 로케일에 맞게 만든다.
+  /// 예외: [ValidationException]은 feature가 l10n으로 생성한 문구를 담는다.
   final String message;
 
   /// 원본 예외. 로깅용으로만 사용하고 UI에 노출하지 않는다.

@@ -38,6 +38,26 @@ void main() {
     emitter.disposeEffects();
   });
 
+  testWidgets('구독 전에 방출된 Effect는 첫 구독자에게 순서대로 전달된다 (버퍼링)', (tester) async {
+    final emitter = _TestEmitter()
+      ..emitEffect(const _Ping(1))
+      ..emitEffect(const _Ping(2));
+    final received = <_TestEffect>[];
+
+    await tester.pumpWidget(
+      MviEffectListener<_TestEffect>(
+        effects: emitter.effects,
+        onEffect: (context, effect) => received.add(effect),
+        child: const SizedBox(),
+      ),
+    );
+    await tester.pump();
+
+    expect(received.map((e) => (e as _Ping).value), [1, 2]);
+
+    emitter.disposeEffects();
+  });
+
   testWidgets('위젯이 dispose 되면 더 이상 Effect를 받지 않는다', (tester) async {
     final emitter = _TestEmitter();
     final received = <_TestEffect>[];
