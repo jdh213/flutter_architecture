@@ -9,6 +9,8 @@
    역방향/feature 간 직접 import 금지. 연결은 apps/app(bootstrap overrides, 위젯 주입)이 조립.
    feature 내부에서 presentation은 data를 직접 import 하지 않는다 — 경계
    provider(Repository/UseCase)는 src/di.dart에 둔다.
+   라우터·DI 배선은 각 앱 소유, 공통 부트스트랩 골격은 app_shell (ADR-0007).
+   app_shell은 feature를 모른다.
 2. **MVI**: 화면 = screen/view_model/state/intent/effect 5파일.
    View는 ViewModel의 `onIntent(...)`만 호출. 1회성 이벤트(스낵바/네비게이션)는 Effect.
 3. **Result**: Repository는 throw 하지 않고 `Result<T>` 반환.

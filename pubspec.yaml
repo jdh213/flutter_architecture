@@ -13,6 +13,7 @@ workspace:
   - packages/app_l10n
   - packages/app_mvi
   - packages/app_network
+  - packages/app_shell
   - packages/app_storage
   - packages/app_design_system
   - packages/features/feature_auth

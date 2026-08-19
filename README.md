@@ -39,6 +39,7 @@ flutter_architecture/
 │   ├── app_l10n/               # 국제화: ARB(ko/en), AppLocalizations, 예외→문구 매핑
 │   ├── app_mvi/                # MVI 계약: Intent/State/Effect, EffectEmitter/Listener
 │   ├── app_network/            # dio + 인터셉터 + 예외 매핑 + safeApiCall
+│   ├── app_shell/              # 앱 공통 골격: 컨테이너, 에러 훅, runApp (멀티 앱 대비)
 │   ├── app_storage/            # KeyValueStore / SecureStore / JsonCacheStore(drift)
 │   ├── app_design_system/      # 토큰, 테마, 공용 위젯
 │   └── features/
@@ -85,6 +86,7 @@ app  →  feature_*  →  app_network / app_storage / app_mvi / app_design_syste
 - [아키텍처](docs/ARCHITECTURE.md) — 계층, 의존 규칙, MVI 데이터 흐름, DI 배선
 - [컨벤션](docs/CONVENTIONS.md) — 네이밍, 폴더, import, lint, 생성 파일 정책
 - [새 기능 추가 가이드](docs/manual/NEW_FEATURE_GUIDE.md) — feature 추가 절차 (step-by-step)
+- [새 앱 추가 가이드](docs/manual/NEW_APP_GUIDE.md) — 멀티 앱 확장 절차 (app_shell 기반)
 - [Flavor & 환경/비밀값](docs/manual/FLAVORS_AND_ENV.md) — flavor, iOS 스킴, dart-define 비밀값 주입
 - [의존성 업그레이드](docs/manual/UPGRADING.md) — 버전이 analyzer 축으로 묶이는 원리와 업그레이드 절차
 - ADR (아키텍처 결정 기록)
@@ -94,3 +96,4 @@ app  →  feature_*  →  app_network / app_storage / app_mvi / app_design_syste
   - [0004 — 저장소 전략](docs/adr/0004-storage-strategy.md)
   - [0005 — UseCase는 선택적 계층](docs/adr/0005-optional-usecase-layer.md)
   - [0006 — 문자열 경로 라우팅 유지](docs/adr/0006-string-routes-over-typed-routes.md)
+  - [0007 — 라우터는 앱별 소유, 공통 골격은 app_shell](docs/adr/0007-per-app-router-shared-shell.md)

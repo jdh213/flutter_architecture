@@ -13,6 +13,7 @@ dependencies:
   app_l10n:
   app_mvi:
   app_network:
+  app_shell:
   app_storage:
   feature_auth:
   feature_example:

@@ -1,0 +1,17 @@
+name: app_shell
+description: >-
+  앱 조립의 공통 골격 — 바인딩 초기화, ProviderContainer 구성, 전역 에러 훅,
+  runApp. apps/ 아래 모든 앱이 이 골격 위에 자신의 조립(라우터, overrides)을 얹는다.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  app_core:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.1.0
+  riverpod_annotation: ^4.0.0

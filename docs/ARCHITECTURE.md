@@ -4,8 +4,10 @@
 
 ```mermaid
 graph TD
-    APP["apps/app<br/>(composition root)"] --> FA["feature_auth"]
+    APP["apps/app<br/>(composition root)"] --> SHELL["app_shell"]
+    APP --> FA["feature_auth"]
     APP --> FE["feature_example"]
+    SHELL --> CORE
     FA --> NET["app_network"]
     FA --> STO["app_storage"]
     FA --> MVI["app_mvi"]
@@ -33,6 +35,7 @@ feature 간 직접 의존(feature_example → feature_auth)은 금지다.
 | 계층 | 책임 | 금지 사항 |
 |---|---|---|
 | `apps/app` | 조립: 라우터, DI override, flavor 진입점, feature 간 연결 | 비즈니스 로직 |
+| `app_shell` | 앱 공통 골격: 바인딩, 컨테이너, 전역 에러 훅, runApp (ADR-0007) | feature 지식, 라우팅 |
 | `feature_*` | 하나의 기능 단위. domain / data / presentation 3계층 | 다른 feature import |
 | `app_network` | Dio 구성, 인터셉터, DioException → NetworkException | 특정 feature 지식 |
 | `app_storage` | KeyValue / Secure / JsonCache 저장소 | 특정 feature 지식 |
@@ -146,9 +149,14 @@ DioException ──(app_network exception_mapper)──▶ NetworkException ─�
 ## 7. 앱 시작 시퀀스
 
 ```text
-main_dev.dart ─▶ bootstrap(EnvConfig)
-                   ├─ ProviderContainer 생성 + overrides 배선
-                   ├─ SessionController.restore() (비동기, 기다리지 않음)
-                   └─ runApp
+main_dev.dart ─▶ bootstrap(EnvConfig)            # 앱 고유 조립 (apps/app)
+                   └─▶ bootstrapApp(...)          # 공통 골격 (app_shell)
+                        ├─ ProviderContainer 생성 + overrides 배선
+                        ├─ 전역 에러 훅 배선 (ErrorReporter)
+                        ├─ afterInit: SessionController.restore() (기다리지 않음)
+                        └─ runApp
 라우터: AuthUnknown → 스플래시 → (복원 완료) → Authenticated? 홈 : 로그인
 ```
+
+멀티 앱 확장(두 번째 앱 추가) 절차는 [manual/NEW_APP_GUIDE.md](manual/NEW_APP_GUIDE.md),
+라우터를 앱별로 소유하는 근거는 [ADR-0007](adr/0007-per-app-router-shared-shell.md) 참고.
