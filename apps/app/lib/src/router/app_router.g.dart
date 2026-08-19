@@ -11,9 +11,9 @@ part of 'app_router.dart';
 /// 앱 전역 라우터.
 ///
 /// 인증 분기는 화면이 아니라 redirect가 담당한다:
-/// - AuthUnknown       → 스플래시 (세션 복원 중)
-/// - Unauthenticated   → 로그인
-/// - Authenticated     → 목적지 그대로 (로그인/스플래시에 있었다면 홈으로)
+/// - AuthUnknown       → 스플래시 (세션 복원 중, 목적지는 from으로 보존)
+/// - Unauthenticated   → 로그인 (목적지 보존)
+/// - Authenticated     → 목적지 그대로 (우회 중이었다면 from으로 복귀)
 ///
 /// 화면(feature)은 절대 인증 분기 네비게이션을 하지 않는다.
 /// SessionController의 상태만 바꾸면 라우터가 반응한다.
@@ -24,9 +24,9 @@ final appRouterProvider = AppRouterProvider._();
 /// 앱 전역 라우터.
 ///
 /// 인증 분기는 화면이 아니라 redirect가 담당한다:
-/// - AuthUnknown       → 스플래시 (세션 복원 중)
-/// - Unauthenticated   → 로그인
-/// - Authenticated     → 목적지 그대로 (로그인/스플래시에 있었다면 홈으로)
+/// - AuthUnknown       → 스플래시 (세션 복원 중, 목적지는 from으로 보존)
+/// - Unauthenticated   → 로그인 (목적지 보존)
+/// - Authenticated     → 목적지 그대로 (우회 중이었다면 from으로 복귀)
 ///
 /// 화면(feature)은 절대 인증 분기 네비게이션을 하지 않는다.
 /// SessionController의 상태만 바꾸면 라우터가 반응한다.
@@ -37,9 +37,9 @@ final class AppRouterProvider
   /// 앱 전역 라우터.
   ///
   /// 인증 분기는 화면이 아니라 redirect가 담당한다:
-  /// - AuthUnknown       → 스플래시 (세션 복원 중)
-  /// - Unauthenticated   → 로그인
-  /// - Authenticated     → 목적지 그대로 (로그인/스플래시에 있었다면 홈으로)
+  /// - AuthUnknown       → 스플래시 (세션 복원 중, 목적지는 from으로 보존)
+  /// - Unauthenticated   → 로그인 (목적지 보존)
+  /// - Authenticated     → 목적지 그대로 (우회 중이었다면 from으로 복귀)
   ///
   /// 화면(feature)은 절대 인증 분기 네비게이션을 하지 않는다.
   /// SessionController의 상태만 바꾸면 라우터가 반응한다.
@@ -76,4 +76,4 @@ final class AppRouterProvider
   }
 }
 
-String _$appRouterHash() => r'41ef147a44c74a7e102f6c3020770823f51cd2db';
+String _$appRouterHash() => r'b718db604a428022b4f6998b93bc40128551bbbc';
