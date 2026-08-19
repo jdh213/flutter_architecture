@@ -9,9 +9,9 @@
 /// │   ├── repositories/   # Repository 인터페이스
 /// │   └── usecases/       # (선택) 조합·도메인 규칙 — ADR-0005
 /// ├── data/
-/// │   ├── datasources/    # API(dio)·로컬 소스
-/// │   ├── dtos/           # DTO(json) + toDomain()
-/// │   └── repositories/   # Repository 구현 (캐시 폴백)
+/// │   ├── datasources/remote/  # API(dio) — local/은 로컬 소스가 있을 때만
+/// │   ├── dtos/                # DTO(json) + toDomain()
+/// │   └── repositories/        # Repository 구현 (캐시 폴백)
 /// ├── presentation/       # 화면별 MVI 5파일 (screen/view_model/state/intent/effect)
 /// └── di.dart             # 경계 provider 배선
 /// ```

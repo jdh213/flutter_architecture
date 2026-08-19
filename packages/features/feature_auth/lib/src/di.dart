@@ -1,5 +1,5 @@
-import 'package:feature_auth/src/data/datasources/auth_api.dart';
-import 'package:feature_auth/src/data/datasources/auth_token_store.dart';
+import 'package:feature_auth/src/data/datasources/local/auth_token_store.dart';
+import 'package:feature_auth/src/data/datasources/remote/auth_api.dart';
 import 'package:feature_auth/src/data/repositories/auth_repository_impl.dart';
 import 'package:feature_auth/src/domain/repositories/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

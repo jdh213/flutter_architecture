@@ -1,7 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_network/app_network.dart';
-import 'package:feature_auth/src/data/datasources/auth_api.dart';
-import 'package:feature_auth/src/data/datasources/auth_token_store.dart';
+import 'package:feature_auth/src/data/datasources/local/auth_token_store.dart';
+import 'package:feature_auth/src/data/datasources/remote/auth_api.dart';
 import 'package:feature_auth/src/domain/entities/auth_user.dart';
 import 'package:feature_auth/src/domain/repositories/auth_repository.dart';
 

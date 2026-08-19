@@ -10,7 +10,8 @@
 /// src/ 내부 구조는 barrel에서 노출하지 않는 한 다른 패키지에서 import 금지.
 library;
 
-export 'src/data/datasources/auth_token_store.dart' show authTokenStoreProvider;
+export 'src/data/datasources/local/auth_token_store.dart'
+    show authTokenStoreProvider;
 export 'src/domain/entities/auth_status.dart';
 export 'src/domain/entities/auth_user.dart';
 export 'src/presentation/login/login_screen.dart';

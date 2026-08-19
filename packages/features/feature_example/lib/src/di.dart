@@ -1,5 +1,5 @@
 import 'package:app_storage/app_storage.dart';
-import 'package:feature_example/src/data/datasources/posts_api.dart';
+import 'package:feature_example/src/data/datasources/remote/posts_api.dart';
 import 'package:feature_example/src/data/repositories/posts_repository_impl.dart';
 import 'package:feature_example/src/domain/repositories/posts_repository.dart';
 import 'package:feature_example/src/domain/usecases/get_post_detail_use_case.dart';

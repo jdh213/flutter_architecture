@@ -53,9 +53,11 @@ feature_x/lib/src/
 │   ├── repositories/      #   Repository 인터페이스
 │   └── usecases/          #   (선택) 조합·공유·도메인 규칙이 생길 때만 — ADR-0005
 ├── data/                  # domain 인터페이스를 구현한다
-│   ├── datasources/       #   원격(API)·로컬(저장소) 데이터 소스
+│   ├── datasources/
+│   │   ├── remote/        #   서버 통신 (xxx_api.dart) — 정책 없이 호출만
+│   │   └── local/         #   로컬 소스 (DB/secure storage 접근) — 없으면 생략
 │   ├── dtos/              #   DTO + toDomain() (JSON은 여기까지만)
-│   └── repositories/      #   Repository 구현 (캐시 폴백 등)
+│   └── repositories/      #   Repository 구현 — 소스 조합과 정책 (캐시 폴백 등)
 ├── presentation/          # 화면별 MVI 5파일. domain 인터페이스에만 의존
 └── di.dart                # 경계 provider(Repository/UseCase) 배선. presentation은 이것만 import
 ```

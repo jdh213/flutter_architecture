@@ -35,7 +35,9 @@ src/domain/
 ```text
 src/data/
 ├── datasources/
-│   └── bookmarks_api.dart              # Dio 주입. 예외를 처리하지 않는다 (그대로 던짐).
+│   ├── remote/
+│   │   └── bookmarks_api.dart          # Dio 주입. 예외를 처리하지 않는다 (그대로 던짐).
+│   └── local/                          # 로컬 소스가 있을 때만 (예: feature_auth의 token store)
 ├── dtos/
 │   └── bookmark_dto.dart               # freezed + json_serializable + toDomain()
 └── repositories/

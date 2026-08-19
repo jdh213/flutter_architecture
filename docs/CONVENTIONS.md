@@ -19,7 +19,8 @@
   (`_screen`, `_view_model`, `_state`, `_intent`, `_effect`; effect 없으면 생략).
 - feature 내부는 `domain / data / presentation` 3분할 + 구분 폴더:
   domain은 `entities/ repositories/ usecases/`, data는
-  `datasources/ dtos/ repositories/` (ARCHITECTURE.md 2절의 트리 참고).
+  `datasources/(remote|local) dtos/ repositories/`
+  (ARCHITECTURE.md 2절의 트리 참고. local은 로컬 소스가 있을 때만).
 - 두 개 이상의 feature가 쓰는 위젯만 `app_design_system`으로 승격한다.
 
 ## Import 규칙
