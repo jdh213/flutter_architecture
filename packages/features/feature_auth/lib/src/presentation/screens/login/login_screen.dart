@@ -1,9 +1,9 @@
 import 'package:app_design_system/app_design_system.dart';
 import 'package:app_l10n/app_l10n.dart';
 import 'package:app_mvi/app_mvi.dart';
-import 'package:feature_auth/src/presentation/login/login_effect.dart';
-import 'package:feature_auth/src/presentation/login/login_intent.dart';
-import 'package:feature_auth/src/presentation/login/login_view_model.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_effect.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_intent.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -12,7 +12,8 @@
 /// │   ├── datasources/remote/  # API(dio) — local/은 로컬 소스가 있을 때만
 /// │   ├── dtos/                # DTO(json) + toDomain()
 /// │   └── repositories/        # Repository 구현 (캐시 폴백)
-/// ├── presentation/       # 화면별 MVI 5파일 (screen/view_model/state/intent/effect)
+/// ├── presentation/
+/// │   └── screens/        # 화면당 폴더 + MVI 5파일 (screen/view_model/state/intent/effect)
 /// └── di.dart             # 경계 provider 배선
 /// ```
 ///
@@ -23,5 +24,5 @@
 /// - 파라미터를 받는 ViewModel — provider family (post_detail_view_model.dart)
 library;
 
-export 'src/presentation/post_detail/post_detail_screen.dart';
-export 'src/presentation/post_list/post_list_screen.dart';
+export 'src/presentation/screens/post_detail/post_detail_screen.dart';
+export 'src/presentation/screens/post_list/post_list_screen.dart';

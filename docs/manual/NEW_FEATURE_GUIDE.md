@@ -56,13 +56,16 @@ src/data/
 ## 4. presentation 작성 — MVI 5파일
 
 ```text
-src/presentation/bookmark_list/
+src/presentation/screens/bookmark_list/
 ├── bookmark_list_screen.dart      # View
 ├── bookmark_list_view_model.dart  # Notifier + MviEffectEmitter
 ├── bookmark_list_state.dart       # freezed 단일 상태
 ├── bookmark_list_intent.dart      # sealed
 └── bookmark_list_effect.dart      # sealed (없으면 파일 생략)
 ```
+
+화면이 아닌 것은 별도 폴더로: 전역 UI 상태는 `presentation/controllers/`,
+barrel로 export 할 위젯은 `presentation/widgets/` (없으면 생략).
 
 체크리스트:
 - [ ] View는 `onIntent(...)` 외 ViewModel 메서드 호출 금지

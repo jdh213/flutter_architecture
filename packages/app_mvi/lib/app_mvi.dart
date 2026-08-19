@@ -3,7 +3,7 @@
 /// 모든 feature의 화면은 다음 5파일 구조를 따른다:
 ///
 /// ```text
-/// presentation/login/
+/// presentation/screens/login/
 /// ├── login_screen.dart      # View — state 구독 + intent 전달만 한다
 /// ├── login_view_model.dart  # Riverpod Notifier — intent를 받아 state/effect를 방출
 /// ├── login_state.dart       # 단일 불변 상태 (freezed, MviState 구현)

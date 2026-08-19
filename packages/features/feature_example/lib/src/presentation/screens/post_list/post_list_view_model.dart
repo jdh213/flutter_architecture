@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:app_core/app_core.dart';
 import 'package:app_mvi/app_mvi.dart';
 import 'package:feature_example/src/di.dart';
-import 'package:feature_example/src/presentation/post_list/post_list_effect.dart';
-import 'package:feature_example/src/presentation/post_list/post_list_intent.dart';
-import 'package:feature_example/src/presentation/post_list/post_list_state.dart';
+import 'package:feature_example/src/presentation/screens/post_list/post_list_effect.dart';
+import 'package:feature_example/src/presentation/screens/post_list/post_list_intent.dart';
+import 'package:feature_example/src/presentation/screens/post_list/post_list_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'post_list_view_model.g.dart';

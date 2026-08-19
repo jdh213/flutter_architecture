@@ -1,7 +1,7 @@
 import 'package:app_design_system/app_design_system.dart';
 import 'package:app_l10n/app_l10n.dart';
-import 'package:feature_example/src/presentation/post_detail/post_detail_intent.dart';
-import 'package:feature_example/src/presentation/post_detail/post_detail_view_model.dart';
+import 'package:feature_example/src/presentation/screens/post_detail/post_detail_intent.dart';
+import 'package:feature_example/src/presentation/screens/post_detail/post_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

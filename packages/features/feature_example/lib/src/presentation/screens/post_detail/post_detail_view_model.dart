@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:feature_example/src/di.dart';
-import 'package:feature_example/src/presentation/post_detail/post_detail_intent.dart';
-import 'package:feature_example/src/presentation/post_detail/post_detail_state.dart';
+import 'package:feature_example/src/presentation/screens/post_detail/post_detail_intent.dart';
+import 'package:feature_example/src/presentation/screens/post_detail/post_detail_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'post_detail_view_model.g.dart';

@@ -58,7 +58,10 @@ feature_x/lib/src/
 │   │   └── local/         #   로컬 소스 (DB/secure storage 접근) — 없으면 생략
 │   ├── dtos/              #   DTO + toDomain() (JSON은 여기까지만)
 │   └── repositories/      #   Repository 구현 — 소스 조합과 정책 (캐시 폴백 등)
-├── presentation/          # 화면별 MVI 5파일. domain 인터페이스에만 의존
+├── presentation/          # domain 인터페이스에만 의존
+│   ├── screens/           #   화면 — 화면당 폴더 + MVI 5파일 (내부는 평면 유지)
+│   ├── controllers/       #   화면 수명보다 긴 UI 상태 (예: SessionController) — 없으면 생략
+│   └── widgets/           #   barrel로 export 하는 위젯 (예: LogoutButton) — 없으면 생략
 └── di.dart                # 경계 provider(Repository/UseCase) 배선. presentation은 이것만 import
 ```
 

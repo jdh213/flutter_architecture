@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:app_core/app_core.dart';
 import 'package:app_mvi/app_mvi.dart';
 import 'package:feature_auth/src/di.dart';
-import 'package:feature_auth/src/presentation/login/login_effect.dart';
-import 'package:feature_auth/src/presentation/login/login_intent.dart';
-import 'package:feature_auth/src/presentation/login/login_state.dart';
-import 'package:feature_auth/src/presentation/session/session_controller.dart';
+import 'package:feature_auth/src/presentation/controllers/session_controller.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_effect.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_intent.dart';
+import 'package:feature_auth/src/presentation/screens/login/login_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_view_model.g.dart';

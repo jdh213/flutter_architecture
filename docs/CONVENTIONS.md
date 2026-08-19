@@ -15,12 +15,22 @@
 
 ## 폴더 & 파일
 
-- 화면 하나 = `presentation/<화면명>/` 아래 MVI 5파일
+- 화면 하나 = `presentation/screens/<화면명>/` 아래 MVI 5파일
   (`_screen`, `_view_model`, `_state`, `_intent`, `_effect`; effect 없으면 생략).
 - feature 내부는 `domain / data / presentation` 3분할 + 구분 폴더:
-  domain은 `entities/ repositories/ usecases/`, data는
-  `datasources/(remote|local) dtos/ repositories/`
-  (ARCHITECTURE.md 2절의 트리 참고. local은 로컬 소스가 있을 때만).
+  - domain: `entities/ repositories/ usecases/`
+  - data: `datasources/(remote|local) dtos/ repositories/`
+  - presentation: `screens/ controllers/ widgets/`
+  (ARCHITECTURE.md 2절의 트리 참고. 비어 있을 폴더는 만들지 않는다.)
+
+### 폴더 생성 기준
+
+폴더는 **개수가 자라는 축**에만 만든다 (엔티티가 늘고, 화면이 늘고).
+반대로 **함께 변경되는 고정 세트는 한 폴더에 평면으로** 둔다 —
+화면 폴더 안의 MVI 5파일을 state/·intent/ 등으로 다시 나누지 않는 이유다
+(폴더당 파일이 영원히 1개인 폴더는 이름의 중복일 뿐이다).
+예외: 화면 전용 위젯이 늘어나면 `screens/<화면명>/widgets/`는 허용
+(그건 자라는 축이므로).
 - 두 개 이상의 feature가 쓰는 위젯만 `app_design_system`으로 승격한다.
 
 ## Import 규칙

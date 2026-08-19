@@ -14,6 +14,6 @@ export 'src/data/datasources/local/auth_token_store.dart'
     show authTokenStoreProvider;
 export 'src/domain/entities/auth_status.dart';
 export 'src/domain/entities/auth_user.dart';
-export 'src/presentation/login/login_screen.dart';
-export 'src/presentation/session/session_controller.dart';
+export 'src/presentation/controllers/session_controller.dart';
+export 'src/presentation/screens/login/login_screen.dart';
 export 'src/presentation/widgets/logout_button.dart';
