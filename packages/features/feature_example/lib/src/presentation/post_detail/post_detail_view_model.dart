@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:feature_example/src/data/posts_repository_impl.dart';
+import 'package:feature_example/src/di.dart';
 import 'package:feature_example/src/presentation/post_detail/post_detail_intent.dart';
 import 'package:feature_example/src/presentation/post_detail/post_detail_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,11 +29,17 @@ class PostDetailViewModel extends _$PostDetailViewModel {
   Future<void> _load() async {
     state = const PostDetailState();
 
-    final result = await ref.read(postsRepositoryProvider).fetchPost(postId);
+    // 조합/도메인 규칙이 필요한 조회라 Repository 직행 대신 UseCase를 쓴다
+    // (도입 기준: ADR-0005).
+    final result = await ref.read(getPostDetailUseCaseProvider).call(postId);
     if (!ref.mounted) return;
 
     state = result.fold(
-      onSuccess: (post) => PostDetailState(isLoading: false, post: post),
+      onSuccess: (bundle) => PostDetailState(
+        isLoading: false,
+        post: bundle.post,
+        relatedPosts: bundle.relatedPosts,
+      ),
       onFailure: (exception) => PostDetailState(
         isLoading: false,
         errorMessage: exception.message,

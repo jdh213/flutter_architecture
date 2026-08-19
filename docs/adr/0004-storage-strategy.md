@@ -29,7 +29,7 @@ key-JSON(payload) + updatedAt 구조면:
 - feature는 스키마 없이 `put/get(decode:)`만으로 오프라인 캐시를 얻는다
 - TTL은 updatedAt으로 일괄 처리
 - 정교한 쿼리가 정말 필요해지면 그때 전용 테이블을 추가한다
-  (NEW_FEATURE_GUIDE.md 부록 B)
+  (NEW_FEATURE_GUIDE.md 부록 C)
 
 ### drift를 선택한 이유 (vs hive/isar/sqflite)
 

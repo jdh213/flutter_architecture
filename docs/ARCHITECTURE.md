@@ -41,12 +41,17 @@ feature 간 직접 의존(feature_example → feature_auth)은 금지다.
 ```text
 feature_x/lib/src/
 ├── domain/          # 엔티티(freezed) + Repository 인터페이스. 외부 세계를 모른다.
+│   └── usecases/    # (선택) 조합·공유·도메인 규칙이 생길 때만 추가 — ADR-0005
 ├── data/            # DTO + API + Repository 구현. domain 인터페이스를 구현한다.
-└── presentation/    # 화면별 MVI 5파일. domain 인터페이스에만 의존한다.
+├── presentation/    # 화면별 MVI 5파일. domain 인터페이스에만 의존한다.
+└── di.dart          # (선택) UseCase 등 domain에 둘 수 없는 배선 전용 파일
 ```
 
 - **presentation → domain ← data** : presentation은 data를 직접 모른다.
   연결은 Riverpod provider(`xxxRepositoryProvider`)가 담당한다.
+- **UseCase는 선택적 계층**이다. 기본은 ViewModel → Repository 직행이며,
+  공유/조합/복잡한 도메인 규칙 조건이 생길 때만 추가한다.
+  판단 기준과 예제(`GetPostDetailUseCase`)는 [ADR-0005](adr/0005-optional-usecase-layer.md) 참고.
 - 외부에 공개할 것만 barrel(`lib/feature_x.dart`)에 export 한다.
   다른 패키지에서 `src/` 직접 import는 금지.
 

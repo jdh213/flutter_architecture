@@ -91,3 +91,4 @@ app  →  feature_*  →  app_network / app_storage / app_mvi / app_design_syste
   - [0002 — pub workspace 멀티 패키지](docs/adr/0002-pub-workspace-multi-package.md)
   - [0003 — MVI 프레젠테이션 패턴](docs/adr/0003-mvi-presentation-pattern.md)
   - [0004 — 저장소 전략](docs/adr/0004-storage-strategy.md)
+  - [0005 — UseCase는 선택적 계층](docs/adr/0005-optional-usecase-layer.md)

@@ -9,6 +9,7 @@ abstract class PostDetailState with _$PostDetailState implements MviState {
   const factory PostDetailState({
     @Default(true) bool isLoading,
     Post? post,
+    @Default([]) List<Post> relatedPosts,
     String? errorMessage,
   }) = _PostDetailState;
 }

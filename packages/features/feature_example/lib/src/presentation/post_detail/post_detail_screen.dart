@@ -41,6 +41,28 @@ class PostDetailScreen extends ConsumerWidget {
                 state.post!.body,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
+              // 관련 글은 UseCase의 부분 실패 정책에 따라
+              // 조회 실패 시 빈 목록이 되어 섹션 자체가 사라진다.
+              if (state.relatedPosts.isNotEmpty) ...[
+                const AppGap.xl(),
+                Text(
+                  '같은 작성자의 다른 글',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const AppGap.sm(),
+                for (final related in state.relatedPosts)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.xs,
+                    ),
+                    child: Text(
+                      '• ${related.title}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+              ],
             ],
           ),
         ),

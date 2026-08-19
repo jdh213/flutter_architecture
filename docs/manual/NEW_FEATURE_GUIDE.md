@@ -108,7 +108,26 @@ dart run build_runner build --delete-conflicting-outputs
      401 → refresh 시도 → 성공 시 원 요청 재시도 로직 구현
 3. 소셜 로그인: `AuthApi`에 `loginWithKakao()` 등 추가 — Repository/화면 구조는 유지
 
-## 부록 B — feature에 전용 DB 테이블이 필요할 때
+## 부록 B — UseCase는 언제 추가하나
+
+기본은 ViewModel → Repository 직행이다. 다음 중 하나가 생기면
+`src/domain/usecases/`에 UseCase를 추가한다 (판단 기준: ADR-0005):
+
+1. 같은 비즈니스 로직을 여러 ViewModel이 공유할 때
+2. 하나의 작업이 여러 Repository/호출을 조합할 때
+3. 표현도 데이터 접근도 아닌 도메인 규칙이 있을 때
+
+절차:
+- [ ] `domain/usecases/xxx_use_case.dart` — 순수 Dart, Repository 인터페이스만 의존, `call()` 반환형은 `Future<Result<T>>`
+- [ ] `src/di.dart`에 provider 배선 (domain은 data의 provider를 import 할 수 없으므로)
+- [ ] ViewModel의 호출 대상을 Repository → UseCase로 교체
+- [ ] UseCase 단독 테스트 작성 (Repository mock)
+- [ ] 위임만 하는 pass-through UseCase는 만들지 않는다
+
+살아있는 예제: `feature_example`의 `GetPostDetailUseCase`
+(병렬 조합 + 도메인 규칙 + 부분 실패 정책 + 테스트).
+
+## 부록 C — feature에 전용 DB 테이블이 필요할 때
 
 `JsonCacheStore`(key-JSON)로 부족하고 쿼리가 필요한 경우:
 
