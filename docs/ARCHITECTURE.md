@@ -48,11 +48,16 @@ feature 간 직접 의존(feature_example → feature_auth)은 금지다.
 
 ```text
 feature_x/lib/src/
-├── domain/          # 엔티티(freezed) + Repository 인터페이스. 외부 세계를 모른다.
-│   └── usecases/    # (선택) 조합·공유·도메인 규칙이 생길 때만 추가 — ADR-0005
-├── data/            # DTO + API + Repository 구현. domain 인터페이스를 구현한다.
-├── presentation/    # 화면별 MVI 5파일. domain 인터페이스에만 의존한다.
-└── di.dart          # 경계 provider(Repository/UseCase) 배선. presentation은 이것만 import
+├── domain/                # 외부 세계를 모른다 (순수 Dart)
+│   ├── entities/          #   freezed 엔티티
+│   ├── repositories/      #   Repository 인터페이스
+│   └── usecases/          #   (선택) 조합·공유·도메인 규칙이 생길 때만 — ADR-0005
+├── data/                  # domain 인터페이스를 구현한다
+│   ├── datasources/       #   원격(API)·로컬(저장소) 데이터 소스
+│   ├── dtos/              #   DTO + toDomain() (JSON은 여기까지만)
+│   └── repositories/      #   Repository 구현 (캐시 폴백 등)
+├── presentation/          # 화면별 MVI 5파일. domain 인터페이스에만 의존
+└── di.dart                # 경계 provider(Repository/UseCase) 배선. presentation은 이것만 import
 ```
 
 - **presentation → domain ← data** : presentation은 data를 직접 모른다.

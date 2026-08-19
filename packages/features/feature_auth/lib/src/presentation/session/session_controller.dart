@@ -1,6 +1,6 @@
 import 'package:feature_auth/src/di.dart';
-import 'package:feature_auth/src/domain/auth_status.dart';
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/domain/entities/auth_status.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'session_controller.g.dart';

@@ -4,9 +4,16 @@
 ///
 /// ```text
 /// src/
-/// ├── domain/          # 엔티티(freezed) + Repository 인터페이스. 외부 의존 없음.
-/// ├── data/            # DTO(json) + API(dio) + Repository 구현(캐시 폴백)
-/// └── presentation/    # 화면별 MVI 5파일 (screen/view_model/state/intent/effect)
+/// ├── domain/
+/// │   ├── entities/       # freezed 엔티티 (외부 의존 없음)
+/// │   ├── repositories/   # Repository 인터페이스
+/// │   └── usecases/       # (선택) 조합·도메인 규칙 — ADR-0005
+/// ├── data/
+/// │   ├── datasources/    # API(dio)·로컬 소스
+/// │   ├── dtos/           # DTO(json) + toDomain()
+/// │   └── repositories/   # Repository 구현 (캐시 폴백)
+/// ├── presentation/       # 화면별 MVI 5파일 (screen/view_model/state/intent/effect)
+/// └── di.dart             # 경계 provider 배선
 /// ```
 ///
 /// 시연하는 패턴:

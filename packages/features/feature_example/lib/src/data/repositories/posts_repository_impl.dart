@@ -1,10 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_network/app_network.dart';
 import 'package:app_storage/app_storage.dart';
-import 'package:feature_example/src/data/post_dto.dart';
-import 'package:feature_example/src/data/posts_api.dart';
-import 'package:feature_example/src/domain/post.dart';
-import 'package:feature_example/src/domain/posts_repository.dart';
+import 'package:feature_example/src/data/datasources/posts_api.dart';
+import 'package:feature_example/src/data/dtos/post_dto.dart';
+import 'package:feature_example/src/domain/entities/post.dart';
+import 'package:feature_example/src/domain/repositories/posts_repository.dart';
 
 /// 네트워크 우선 + 오프라인 캐시 폴백 Repository.
 ///

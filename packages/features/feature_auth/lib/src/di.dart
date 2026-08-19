@@ -1,7 +1,7 @@
-import 'package:feature_auth/src/data/auth_api.dart';
-import 'package:feature_auth/src/data/auth_repository_impl.dart';
-import 'package:feature_auth/src/data/auth_token_store.dart';
-import 'package:feature_auth/src/domain/auth_repository.dart';
+import 'package:feature_auth/src/data/datasources/auth_api.dart';
+import 'package:feature_auth/src/data/datasources/auth_token_store.dart';
+import 'package:feature_auth/src/data/repositories/auth_repository_impl.dart';
+import 'package:feature_auth/src/domain/repositories/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'di.g.dart';

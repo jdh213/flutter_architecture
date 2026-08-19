@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
 
 /// 인증 저장소 계약.
 ///

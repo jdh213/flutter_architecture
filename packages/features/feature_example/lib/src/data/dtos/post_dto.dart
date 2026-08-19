@@ -1,4 +1,4 @@
-import 'package:feature_example/src/domain/post.dart';
+import 'package:feature_example/src/domain/entities/post.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'post_dto.freezed.dart';

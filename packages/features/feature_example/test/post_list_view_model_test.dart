@@ -1,7 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:feature_example/src/di.dart';
-import 'package:feature_example/src/domain/post.dart';
-import 'package:feature_example/src/domain/posts_repository.dart';
+import 'package:feature_example/src/domain/entities/post.dart';
+import 'package:feature_example/src/domain/repositories/posts_repository.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_effect.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_intent.dart';
 import 'package:feature_example/src/presentation/post_list/post_list_view_model.dart';

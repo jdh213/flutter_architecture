@@ -2,9 +2,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_storage/app_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/native.dart';
-import 'package:feature_example/src/data/post_dto.dart';
-import 'package:feature_example/src/data/posts_api.dart';
-import 'package:feature_example/src/data/posts_repository_impl.dart';
+import 'package:feature_example/src/data/datasources/posts_api.dart';
+import 'package:feature_example/src/data/dtos/post_dto.dart';
+import 'package:feature_example/src/data/repositories/posts_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

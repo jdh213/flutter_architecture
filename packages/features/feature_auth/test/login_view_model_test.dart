@@ -1,8 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:feature_auth/src/di.dart';
-import 'package:feature_auth/src/domain/auth_repository.dart';
-import 'package:feature_auth/src/domain/auth_status.dart';
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/domain/entities/auth_status.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
+import 'package:feature_auth/src/domain/repositories/auth_repository.dart';
 import 'package:feature_auth/src/presentation/login/login_effect.dart';
 import 'package:feature_auth/src/presentation/login/login_intent.dart';
 import 'package:feature_auth/src/presentation/login/login_view_model.dart';

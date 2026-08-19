@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
-import 'package:feature_example/src/domain/post.dart';
-import 'package:feature_example/src/domain/posts_repository.dart';
+import 'package:feature_example/src/domain/entities/post.dart';
+import 'package:feature_example/src/domain/repositories/posts_repository.dart';
 
 /// 게시글 상세 화면에 필요한 데이터 묶음.
 class PostDetailBundle {

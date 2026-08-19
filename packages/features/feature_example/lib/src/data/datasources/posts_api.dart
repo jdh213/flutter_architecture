@@ -1,6 +1,6 @@
 import 'package:app_network/app_network.dart';
 import 'package:dio/dio.dart';
-import 'package:feature_example/src/data/post_dto.dart';
+import 'package:feature_example/src/data/dtos/post_dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_api.g.dart';

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_api.g.dart';

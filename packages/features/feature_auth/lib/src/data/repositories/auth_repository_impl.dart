@@ -1,9 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_network/app_network.dart';
-import 'package:feature_auth/src/data/auth_api.dart';
-import 'package:feature_auth/src/data/auth_token_store.dart';
-import 'package:feature_auth/src/domain/auth_repository.dart';
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/data/datasources/auth_api.dart';
+import 'package:feature_auth/src/data/datasources/auth_token_store.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
+import 'package:feature_auth/src/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl({

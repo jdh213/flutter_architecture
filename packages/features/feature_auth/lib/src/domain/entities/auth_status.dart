@@ -1,4 +1,4 @@
-import 'package:feature_auth/src/domain/auth_user.dart';
+import 'package:feature_auth/src/domain/entities/auth_user.dart';
 
 /// 전역 인증 상태.
 ///

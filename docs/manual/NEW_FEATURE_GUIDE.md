@@ -20,8 +20,10 @@ rm -rf .dart_tool
 
 ```text
 src/domain/
-├── bookmark.dart            # freezed 엔티티. JSON을 모른다.
-└── bookmarks_repository.dart # abstract interface. Result<T> 반환.
+├── entities/
+│   └── bookmark.dart              # freezed 엔티티. JSON을 모른다.
+└── repositories/
+    └── bookmarks_repository.dart  # abstract interface. Result<T> 반환.
 ```
 
 체크리스트:
@@ -32,9 +34,12 @@ src/domain/
 
 ```text
 src/data/
-├── bookmark_dto.dart          # freezed + json_serializable + toDomain()
-├── bookmarks_api.dart         # Dio 주입. 예외를 처리하지 않는다 (그대로 던짐).
-└── bookmarks_repository_impl.dart  # safeApiCall + (필요시) JsonCacheStore 폴백
+├── datasources/
+│   └── bookmarks_api.dart              # Dio 주입. 예외를 처리하지 않는다 (그대로 던짐).
+├── dtos/
+│   └── bookmark_dto.dart               # freezed + json_serializable + toDomain()
+└── repositories/
+    └── bookmarks_repository_impl.dart  # safeApiCall + (필요시) JsonCacheStore 폴백
 ```
 
 체크리스트:
