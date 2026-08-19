@@ -1,0 +1,21 @@
+name: flutter_architecture_workspace
+description: >-
+  Flutter 모듈러 템플릿 워크스페이스 루트.
+  모든 패키지는 Dart pub workspace로 묶여 단일 `flutter pub get`으로 해석된다.
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - apps/app
+  - packages/app_core
+  - packages/app_mvi
+  - packages/app_network
+  - packages/app_storage
+  - packages/app_design_system
+  - packages/features/feature_auth
+  - packages/features/feature_example
+
+dev_dependencies:
+  very_good_analysis: ^10.0.0

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: 의존성 설치 (workspace 전체)
+        run: flutter pub get
+
+      - name: 포맷 검사 (생성 파일 제외)
+        run: |
+          find apps packages -name '*.dart' \
+            ! -name '*.g.dart' ! -name '*.freezed.dart' ! -path '*/.dart_tool/*' \
+            -print0 | xargs -0 dart format --output=none --set-exit-if-changed
+
+      - name: 정적 분석
+        run: flutter analyze
+
+      - name: 테스트
+        run: ./scripts/test.sh

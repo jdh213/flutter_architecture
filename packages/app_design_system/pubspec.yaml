@@ -1,0 +1,17 @@
+name: app_design_system
+description: 디자인 시스템 — 디자인 토큰, 테마, 공용 위젯. 비즈니스 로직 의존 금지.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  custom_lint: ^0.8.1
+  flutter_test:
+    sdk: flutter
+  riverpod_lint: ^3.1.0

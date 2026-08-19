@@ -1,0 +1,27 @@
+# 워크스페이스 전체 lint 설정.
+# 각 패키지는 별도 analysis_options.yaml 없이 이 파일을 상속한다.
+# (패키지에 개별 파일을 만들면 이 파일이 무시되므로 만들지 않는다)
+
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  plugins:
+    - custom_lint # riverpod_lint 활성화 (provider 오용을 컴파일 전에 잡는다)
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/build/**"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+
+linter:
+  rules:
+    # 템플릿 정책: 문서 주석은 public API 전부가 아니라 의도가 필요한 곳에만 단다.
+    public_member_api_docs: false
+    # 한국어 주석/문서가 길어지는 것을 허용한다.
+    lines_longer_than_80_chars: false

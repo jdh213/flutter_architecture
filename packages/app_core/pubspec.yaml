@@ -1,0 +1,17 @@
+name: app_core
+description: 순수 Dart 공통 계층 — Result, 예외 체계, 로거, 환경 설정. Flutter 의존 금지.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+dependencies:
+  riverpod: ^3.1.0
+  riverpod_annotation: ^4.0.0
+dev_dependencies:
+  build_runner: ^2.15.1
+  custom_lint: ^0.8.1
+  riverpod_generator: ^4.0.0+1
+  riverpod_lint: ^3.1.0
+  test: ^1.31.0

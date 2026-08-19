@@ -1,0 +1,37 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+build/
+# workspace는 루트에 단일 pubspec.lock을 생성한다 — 재현 가능한 빌드를 위해 커밋한다
+*.g.dart.bak
+
+# 코드 생성 산출물은 커밋한다 (템플릿 복사 직후 바로 실행 가능하도록)
+# *.g.dart / *.freezed.dart 는 의도적으로 ignore 하지 않음
+
+# IDE
+.idea/
+*.iml
+.vscode/settings.json
+
+# macOS
+.DS_Store
+
+# 환경 비밀값 (env/*.json 중 실제 비밀이 들어가는 파일)
+apps/app/env/*.local.json
+
+# Android
+apps/app/android/.gradle/
+apps/app/android/local.properties
+apps/app/android/key.properties
+apps/app/android/app/upload-keystore.jks
+
+# iOS
+apps/app/ios/Pods/
+apps/app/ios/.symlinks/
+apps/app/ios/Flutter/ephemeral/
+apps/app/ios/Flutter/Generated.xcconfig
+apps/app/ios/Flutter/flutter_export_environment.sh
+
+# Flutter ephemeral
+**/.flutter-plugins
+**/.flutter-plugins-dependencies

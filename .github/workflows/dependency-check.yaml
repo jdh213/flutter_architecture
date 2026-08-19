@@ -1,0 +1,89 @@
+name: Dependency Check
+
+# 매주 월요일 09:00 KST(00:00 UTC)에 의존성 업그레이드 가능 여부를 점검한다.
+# - 전체 리포트는 항상 Actions 실행 페이지의 Summary에 표시된다.
+# - 업그레이드 가능한 직접 의존성이 있으면 이슈를 생성한다 (이미 열려 있으면 코멘트).
+# 배경 원리: docs/manual/UPGRADING.md
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  outdated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: 의존성 설치
+        run: flutter pub get
+
+      - name: pub outdated 리포트
+        id: report
+        run: |
+          flutter pub outdated | tee outdated.txt || true
+          dart pub outdated --json > outdated.json || true
+
+          {
+            echo "## 의존성 점검 리포트 ($(date -u +%Y-%m-%d))"
+            echo ""
+            echo '```'
+            cat outdated.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          # 직접/개발 의존성 중 Resolvable > Current 인 것 = 지금 올릴 수 있는 것
+          count=$(jq '[.packages[]
+            | select(.kind != "transitive")
+            | select((.resolvable.version // "") != (.current.version // ""))
+            ] | length' outdated.json)
+          echo "actionable=$count" >> "$GITHUB_OUTPUT"
+          echo "업그레이드 가능한 직접 의존성: $count 개"
+
+      - name: 업그레이드 가능 시 이슈 생성/갱신
+        if: steps.report.outputs.actionable != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="주간 의존성 점검: 업그레이드 가능한 패키지 발견"
+
+          {
+            echo "\`flutter pub outdated\` 결과 아래 직접 의존성을 올릴 수 있습니다."
+            echo ""
+            echo "| 패키지 | Current | Resolvable | Latest |"
+            echo "|---|---|---|---|"
+            jq -r '.packages[]
+              | select(.kind != "transitive")
+              | select((.resolvable.version // "") != (.current.version // ""))
+              | "| \(.package) | \(.current.version // "-") | \(.resolvable.version // "-") | \(.latest.version // "-") |"' outdated.json
+            echo ""
+            echo "### 업그레이드 절차"
+            echo '```bash'
+            echo "flutter pub upgrade        # caret 범위 내"
+            echo "./scripts/gen.sh"
+            echo "./scripts/check.sh"
+            echo '```'
+            echo ""
+            echo "메이저 점프가 필요하면 \`flutter pub upgrade --major-versions\`. 자세한 원리는 docs/manual/UPGRADING.md 참고."
+          } > issue_body.md
+
+          existing=$(gh issue list --state open \
+            --search "\"주간 의존성 점검\" in:title" \
+            --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file issue_body.md
+            echo "기존 이슈 #$existing 에 코멘트 추가"
+          else
+            gh issue create --title "$TITLE" --body-file issue_body.md
+          fi
